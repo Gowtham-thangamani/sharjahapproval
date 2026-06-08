@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribers - Sharjah Approval Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Manage newsletter subscribers for Sharjah Approval.">
+    <link rel="canonical" href="https://sharjahapproval.com/admin/subscribers.html">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <meta property="og:title" content="Subscribers - Admin"><meta name="twitter:card" content="summary">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Subscribers"}</script>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Source Sans Pro',sans-serif;background:#f5f6fa;min-height:100vh}.admin-wrapper{display:flex;min-height:100vh}
+        .sidebar{width:250px;background:#1a1a2e;color:#fff;position:fixed;height:100vh;overflow-y:auto;z-index:100}.sidebar-header{padding:20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,0.1)}.sidebar-logo{width:45px;height:45px;border-radius:10px;overflow:hidden;background:#fff}.sidebar-logo img{width:100%;height:100%;object-fit:cover}.sidebar-brand h2{font-size:1.1rem}.sidebar-brand span{font-size:0.75rem;opacity:0.7}.sidebar-menu{padding:15px 0}.menu-section{font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;padding:15px 20px 8px;opacity:0.5}.menu-item{display:flex;align-items:center;gap:12px;padding:12px 20px;color:rgba(255,255,255,0.7);text-decoration:none;transition:0.3s;border-left:3px solid transparent}.menu-item:hover,.menu-item.active{background:rgba(255,255,255,0.1);color:#fff;border-left-color:#0a6e4f}.menu-item i{width:20px;text-align:center}.menu-divider{height:1px;background:rgba(255,255,255,0.1);margin:15px 20px}
+        .main-content{flex:1;margin-left:250px;padding:20px}.top-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;background:#fff;padding:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.05);flex-wrap:wrap;gap:15px}.page-title{font-size:1.5rem;color:#1a1a2e}
+        .card{background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.05)}.card-body{padding:20px;overflow-x:auto}
+        .data-table{width:100%;border-collapse:collapse;min-width:500px}.data-table th,.data-table td{padding:15px;text-align:left;border-bottom:1px solid #eee}.data-table th{font-size:0.8rem;text-transform:uppercase;color:#777;font-weight:600}
+        .status-badge{padding:4px 12px;border-radius:20px;font-size:0.8rem;font-weight:600}.status-badge.active{background:#e8f5e9;color:#2e7d32}
+        .actions button{width:35px;height:35px;border:none;border-radius:6px;cursor:pointer}.delete-btn{background:#ffebee;color:#c62828}.delete-btn:hover{background:#c62828;color:#fff}
+        @media(max-width:992px){.sidebar{width:70px}.sidebar-brand,.menu-section,.menu-item span{display:none}.sidebar-header{justify-content:center;padding:15px}.menu-item{justify-content:center;padding:15px}.main-content{margin-left:70px}}
+        @media(max-width:768px){.sidebar{transform:translateX(-100%);width:250px;transition:0.3s}.sidebar.active{transform:translateX(0)}.sidebar-brand,.menu-section,.menu-item span{display:block}.main-content{margin-left:0}}
+        .mobile-menu-btn{display:none;position:fixed;top:15px;left:15px;z-index:101;background:#1a1a2e;color:#fff;border:none;padding:10px 15px;border-radius:8px;cursor:pointer}@media(max-width:768px){.mobile-menu-btn{display:block}}
+        .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:99}.overlay.active{display:block}
+    </style>
+</head>
+<body>
+<script>if(localStorage.getItem('sa_admin_logged')!=='true'){window.location.href='index.html';}</script>
+<button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<div class="admin-wrapper">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header"><div class="sidebar-logo"><img src="../logo.png" alt="Logo"></div><div class="sidebar-brand"><h2>Sharjah</h2><span>Approval</span></div></div>
+        <nav class="sidebar-menu">
+            <div class="menu-section">CONTENT MANAGEMENT</div>
+            <a href="dashboard.html" class="menu-item"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+            <a href="blogs.html" class="menu-item"><i class="fas fa-newspaper"></i><span>Blogs</span></a>
+            <a href="services.html" class="menu-item"><i class="fas fa-concierge-bell"></i><span>Services</span></a>
+            <a href="subscribers.html" class="menu-item active"><i class="fas fa-users"></i><span>Subscribers</span></a>
+            <a href="messages.html" class="menu-item"><i class="fas fa-envelope"></i><span>Messages</span></a>
+            <div class="menu-section">ANALYTICS</div>
+            <a href="analytics.html" class="menu-item"><i class="fas fa-chart-line"></i><span>Live Analytics</span></a>
+            <div class="menu-section">USER MANAGEMENT</div>
+            <a href="users.html" class="menu-item"><i class="fas fa-user-cog"></i><span>Users</span></a>
+            <a href="profile.html" class="menu-item"><i class="fas fa-id-card"></i><span>My Profile</span></a>
+            <div class="menu-section">SETTINGS</div>
+            <a href="settings.html" class="menu-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+            <div class="menu-divider"></div>
+            <a href="../index.html" class="menu-item" target="_blank"><i class="fas fa-external-link-alt"></i><span>View Site</span></a>
+            <a href="javascript:void(0)" class="menu-item" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </nav>
+    </aside>
+    <main class="main-content">
+        <header class="top-header"><h1 class="page-title">Subscribers</h1><span>Total: <strong id="totalCount">0</strong></span></header>
+        <div class="card"><div class="card-body">
+            <table class="data-table">
+                <thead><tr><th>EMAIL</th><th>DATE</th><th>STATUS</th><th>ACTIONS</th></tr></thead>
+                <tbody id="subsTable"><tr><td colspan="4" style="text-align:center;color:#999;padding:40px">No subscribers yet</td></tr></tbody>
+            </table>
+        </div></div>
+    </main>
+</div>
+<script>
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('active');document.getElementById('overlay').classList.toggle('active')}
+function doLogout(){localStorage.removeItem('sa_admin_logged');localStorage.removeItem('sa_admin_user');window.location.href='index.html'}
+function deleteSub(id){if(confirm('Delete?')){var s=JSON.parse(localStorage.getItem('sa_subscribers')||'[]');var n=[];for(var i=0;i<s.length;i++){if(s[i].id!==id)n.push(s[i])}localStorage.setItem('sa_subscribers',JSON.stringify(n));loadSubs()}}
+function loadSubs(){var s=JSON.parse(localStorage.getItem('sa_subscribers')||'[]');var t=document.getElementById('subsTable');document.getElementById('totalCount').textContent=s.length;if(s.length===0){t.innerHTML='<tr><td colspan="4" style="text-align:center;color:#999;padding:40px">No subscribers</td></tr>';return}var h='';for(var i=0;i<s.length;i++){h+='<tr><td>'+s[i].email+'</td><td>'+new Date(s[i].subscribedAt||s[i].createdAt).toLocaleDateString()+'</td><td><span class="status-badge active">Active</span></td><td class="actions"><button class="delete-btn" onclick="deleteSub(\''+s[i].id+'\')"><i class="fas fa-trash"></i></button></td></tr>'}t.innerHTML=h}
+loadSubs();
+</script>
+</body>
+</html>

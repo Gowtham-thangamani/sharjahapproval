@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services Management - Sharjah Approval Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Source Sans Pro',sans-serif;background:#f5f6fa;min-height:100vh}
+        .admin-wrapper{display:flex;min-height:100vh}
+        
+        .sidebar{width:250px;background:linear-gradient(180deg,#1a1a2e 0%,#16213e 100%);color:#fff;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+        .sidebar-header{padding:20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,0.1)}
+        .sidebar-logo{width:45px;height:45px;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 4px 15px rgba(0,0,0,0.2)}
+        .sidebar-logo img{width:100%;height:100%;object-fit:cover}
+        .sidebar-brand h2{font-size:1.1rem;font-weight:600}
+        .sidebar-brand span{font-size:0.75rem;opacity:0.7}
+        .sidebar-menu{padding:15px 0}
+        .menu-section{font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;padding:15px 20px 8px;opacity:0.5}
+        .menu-item{display:flex;align-items:center;gap:12px;padding:12px 20px;color:rgba(255,255,255,0.7);text-decoration:none;transition:all 0.3s ease;border-left:3px solid transparent}
+        .menu-item:hover{background:rgba(255,255,255,0.1);color:#fff;border-left-color:#0a6e4f}
+        .menu-item.active{background:linear-gradient(90deg,rgba(10,110,79,0.3),transparent);color:#fff;border-left-color:#0a6e4f}
+        .menu-item i{width:20px;text-align:center;font-size:1.1rem}
+        .menu-item .badge{background:linear-gradient(135deg,#0a6e4f,#0d8a63);font-size:0.7rem;padding:3px 10px;border-radius:12px;margin-left:auto}
+        .menu-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);margin:15px 20px}
+        
+        .main-content{flex:1;margin-left:250px;padding:20px}
+        .top-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;background:#fff;padding:20px 25px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);flex-wrap:wrap;gap:15px}
+        .page-title{font-size:1.5rem;color:#1a1a2e;font-weight:700;display:flex;align-items:center;gap:10px}
+        
+        .btn{padding:12px 24px;border-radius:10px;border:none;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:all 0.3s ease;font-size:0.95rem}
+        .btn-primary{background:linear-gradient(135deg,#0a6e4f,#0d8a63);color:#fff;box-shadow:0 4px 15px rgba(10,110,79,0.3)}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(10,110,79,0.4)}
+        .btn-cancel{background:#f5f5f5;color:#333}
+        .btn-cancel:hover{background:#e0e0e0}
+        
+        .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+        
+        .service-card{background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);overflow:hidden;transition:all 0.3s ease;animation:fadeInUp 0.5s ease backwards}
+        .service-card:hover{transform:translateY(-5px);box-shadow:0 8px 30px rgba(0,0,0,0.1)}
+        
+        .service-image{width:100%;height:180px;background:#f0f0f0;position:relative;overflow:hidden}
+        .service-image img{width:100%;height:100%;object-fit:cover}
+        .service-image .no-image{display:flex;align-items:center;justify-content:center;height:100%;color:#bbb;font-size:3rem}
+        .service-status{position:absolute;top:15px;right:15px;padding:5px 12px;border-radius:20px;font-size:0.75rem;font-weight:600}
+        .service-status.active{background:#4caf50;color:#fff}
+        .service-status.inactive{background:#ff9800;color:#fff}
+        
+        .service-body{padding:20px}
+        .service-icon-name{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+        .service-icon{width:50px;height:50px;border-radius:12px;background:linear-gradient(135deg,rgba(10,110,79,0.1),rgba(196,163,90,0.1));display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:#0a6e4f}
+        .service-card h3{font-size:1.1rem;color:#1a1a2e;margin:0}
+        .service-card p{color:#777;font-size:0.9rem;line-height:1.6;margin-bottom:15px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        
+        .service-actions{display:flex;gap:10px;padding-top:15px;border-top:1px solid #f0f0f0}
+        .service-actions button{flex:1;padding:10px;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.85rem;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.3s}
+        .edit-btn{background:#e3f2fd;color:#1976d2}
+        .edit-btn:hover{background:#1976d2;color:#fff}
+        .delete-btn{background:#ffebee;color:#c62828}
+        .delete-btn:hover{background:#c62828;color:#fff}
+        .view-btn{background:#e8f5e9;color:#2e7d32}
+        .view-btn:hover{background:#2e7d32;color:#fff}
+        
+        /* Modal */
+        .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+        .modal-overlay.active{display:flex}
+        .modal{background:#fff;border-radius:20px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;box-shadow:0 25px 80px rgba(0,0,0,0.3)}
+        .modal-header{padding:25px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1}
+        .modal-header h2{font-size:1.3rem;color:#1a1a2e;display:flex;align-items:center;gap:10px}
+        .modal-close{width:36px;height:36px;border-radius:10px;border:none;background:#f5f5f5;cursor:pointer;font-size:1.2rem;color:#777;transition:all 0.3s}
+        .modal-close:hover{background:#ff5252;color:#fff}
+        .modal-body{padding:25px}
+        .modal-footer{padding:20px 25px;border-top:1px solid #eee;display:flex;justify-content:flex-end;gap:12px;background:#f8f9fa;position:sticky;bottom:0}
+        
+        .form-group{margin-bottom:20px}
+        .form-group label{display:block;margin-bottom:8px;font-weight:600;color:#333}
+        .form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1rem;transition:all 0.3s;font-family:inherit}
+        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#0a6e4f;outline:none;box-shadow:0 0 0 4px rgba(10,110,79,0.1)}
+        .form-group textarea{min-height:100px;resize:vertical}
+        .form-group small{color:#777;font-size:0.85rem;margin-top:5px;display:block}
+        
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+        
+        .image-upload{border:2px dashed #ddd;border-radius:12px;padding:30px;text-align:center;cursor:pointer;transition:all 0.3s;background:#fafafa}
+        .image-upload:hover{border-color:#0a6e4f;background:#f0f7f4}
+        .image-upload.has-image{padding:10px}
+        .image-upload i{font-size:2.5rem;color:#bbb;margin-bottom:10px}
+        .image-upload p{color:#777;margin:0}
+        .image-upload img{max-width:100%;max-height:200px;border-radius:8px}
+        .image-upload input{display:none}
+        
+        .icon-selector{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;max-height:150px;overflow-y:auto;padding:10px;border:2px solid #e0e0e0;border-radius:10px}
+        .icon-option{width:40px;height:40px;border:2px solid transparent;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;background:#f5f5f5}
+        .icon-option:hover{background:#e0e0e0}
+        .icon-option.selected{border-color:#0a6e4f;background:#e8f5e9;color:#0a6e4f}
+        
+        .no-access{text-align:center;padding:60px 20px;color:#777}
+        .no-access i{font-size:4rem;color:#ddd;margin-bottom:20px}
+        .no-access h2{color:#555;margin-bottom:10px}
+        
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        
+        @media(max-width:992px){.sidebar{width:70px}.sidebar-brand,.menu-section,.menu-item span,.menu-item .badge{display:none}.sidebar-header{justify-content:center}.menu-item{justify-content:center;padding:15px}.main-content{margin-left:70px}}
+        @media(max-width:768px){.sidebar{transform:translateX(-100%);width:250px;transition:0.3s}.sidebar.active{transform:translateX(0)}.sidebar-brand,.menu-section,.menu-item span,.menu-item .badge{display:block}.main-content{margin-left:0}.services-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.icon-selector{grid-template-columns:repeat(6,1fr)}}
+        .mobile-menu-btn{display:none;position:fixed;top:15px;left:15px;z-index:101;background:#1a1a2e;color:#fff;border:none;padding:12px 15px;border-radius:10px;cursor:pointer}
+        @media(max-width:768px){.mobile-menu-btn{display:block}}
+        .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:99}.overlay.active{display:block}
+    </style>
+</head>
+<body>
+<script>if(localStorage.getItem('sa_admin_logged')!=='true'){window.location.href='index.html';}</script>
+
+<button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="admin-wrapper">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo"><img src="../logo.png" alt="Logo"></div>
+            <div class="sidebar-brand"><h2>Sharjah</h2><span>Approval</span></div>
+        </div>
+        <nav class="sidebar-menu">
+            <div class="menu-section">CONTENT MANAGEMENT</div>
+            <a href="dashboard.html" class="menu-item"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+            <a href="blogs.html" class="menu-item"><i class="fas fa-newspaper"></i><span>Blogs</span></a>
+            <a href="services.html" class="menu-item active"><i class="fas fa-concierge-bell"></i><span>Services</span><span class="badge" id="serviceCount">0</span></a>
+            <a href="subscribers.html" class="menu-item"><i class="fas fa-users"></i><span>Subscribers</span></a>
+            <a href="messages.html" class="menu-item"><i class="fas fa-envelope"></i><span>Messages</span></a>
+            <div class="menu-section">ANALYTICS</div>
+            <a href="analytics.html" class="menu-item"><i class="fas fa-chart-line"></i><span>Live Analytics</span></a>
+            <div class="menu-section">USER MANAGEMENT</div>
+            <a href="users.html" class="menu-item"><i class="fas fa-user-cog"></i><span>Users</span></a>
+            <a href="profile.html" class="menu-item"><i class="fas fa-id-card"></i><span>My Profile</span></a>
+            <div class="menu-section">SETTINGS</div>
+            <a href="settings.html" class="menu-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+            <div class="menu-divider"></div>
+            <a href="../index.html" class="menu-item" target="_blank"><i class="fas fa-external-link-alt"></i><span>View Site</span></a>
+            <a href="javascript:void(0)" class="menu-item" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </nav>
+    </aside>
+    
+    <main class="main-content">
+        <header class="top-header">
+            <h1 class="page-title"><i class="fas fa-concierge-bell" style="color:#0a6e4f"></i> Services Management</h1>
+            <div id="headerActions"><button class="btn btn-primary" onclick="openAddService()"><i class="fas fa-plus"></i> Add Service</button></div>
+        </header>
+        
+        <div id="mainArea"></div>
+    </main>
+</div>
+
+<!-- Service Modal -->
+<div class="modal-overlay" id="serviceModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="modalTitle"><i class="fas fa-plus-circle"></i> Add Service</h2>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="serviceId">
+            
+            <div class="form-group">
+                <label>Service Image</label>
+                <div class="image-upload" id="imageUpload" onclick="document.getElementById('serviceImage').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Click to upload image</p>
+                    <small>Recommended: 800x500px, Max 2MB</small>
+                </div>
+                <input type="file" id="serviceImage" accept="image/*" onchange="previewImage(this)">
+                <input type="hidden" id="imageData">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Service Name *</label>
+                    <input type="text" id="serviceName" placeholder="e.g., Municipality Approvals">
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="serviceStatus">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Short Description *</label>
+                <input type="text" id="serviceDesc" placeholder="Brief description of the service">
+            </div>
+            
+            <div class="form-group">
+                <label>Full Description</label>
+                <textarea id="serviceFullDesc" placeholder="Detailed description of the service..."></textarea>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Page URL</label>
+                    <input type="text" id="serviceUrl" placeholder="e.g., municipality-approvals.html">
+                    <small>Leave empty for auto-generate</small>
+                </div>
+                <div class="form-group">
+                    <label>Price (AED)</label>
+                    <input type="text" id="servicePrice" placeholder="e.g., Starting from 500">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Select Icon *</label>
+                <div class="icon-selector" id="iconSelector"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="saveService()"><i class="fas fa-save"></i> Save Service</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Force initialize services on page load - only if never set before
+(function(){
+    // Only initialize if key never existed (null)
+    if(localStorage.getItem('sa_services') === null){
+        var defaultData = [
+            {id:'svc_1',icon:'fa-city',name:'Municipality Approvals',desc:'Building permits, trade licenses, signboard permits, municipal NOCs',fullDesc:'Comprehensive Municipality approval services.',url:'sharjah-municipality-approvals.html',price:'Starting from 500 AED',status:'active',image:''},
+            {id:'svc_2',icon:'fa-fire-extinguisher',name:'Civil Defense (SCD)',desc:'Fire safety certificates, emergency plans, fire NOCs',fullDesc:'Complete Civil Defense services.',url:'civil-defense-approvals.html',price:'Starting from 800 AED',status:'active',image:''},
+            {id:'svc_3',icon:'fa-bolt',name:'SEWA Approvals',desc:'Electricity connections, water supply, meter installations',fullDesc:'SEWA approval services.',url:'sewa-approvals.html',price:'Starting from 300 AED',status:'active',image:''},
+            {id:'svc_4',icon:'fa-drafting-compass',name:'Planning & Survey',desc:'Land surveys, Affection Plans, plot demarcation',fullDesc:'Professional planning and survey services.',url:'planning-survey.html',price:'Starting from 1000 AED',status:'active',image:''},
+            {id:'svc_5',icon:'fa-road',name:'RTA Sharjah',desc:'Road permits, traffic NOCs, access approvals',fullDesc:'RTA Sharjah services.',url:'rta-sharjah-approvals.html',price:'Starting from 600 AED',status:'active',image:''},
+            {id:'svc_6',icon:'fa-leaf',name:'Environmental',desc:'Environmental permits, waste management approvals',fullDesc:'Environmental services.',url:'environmental-waste.html',price:'Starting from 700 AED',status:'active',image:''},
+            {id:'svc_7',icon:'fa-water',name:'Drainage & Irrigation',desc:'Drainage connections, irrigation permits',fullDesc:'Drainage and irrigation services.',url:'drainage-irrigation.html',price:'Starting from 500 AED',status:'active',image:''},
+            {id:'svc_8',icon:'fa-satellite-dish',name:'Telecommunication',desc:'Telecom approvals, network permits',fullDesc:'Telecommunication services.',url:'telecommunication.html',price:'Starting from 400 AED',status:'active',image:''},
+            {id:'svc_9',icon:'fa-hard-hat',name:'Construction & Demolition',desc:'Building permits, demolition approvals',fullDesc:'Construction and demolition services.',url:'demolition-construction.html',price:'Starting from 1500 AED',status:'active',image:''},
+            {id:'svc_10',icon:'fa-file-contract',name:'NOC Services',desc:'Various NOCs from multiple authorities',fullDesc:'Comprehensive NOC services.',url:'noc-services.html',price:'Starting from 250 AED',status:'active',image:''}
+        ];
+        localStorage.setItem('sa_services', JSON.stringify(defaultData));
+    }
+})();
+
+var currentUser = null;
+var canEdit = false;
+
+// Available icons
+var icons = ['fa-city','fa-fire-extinguisher','fa-bolt','fa-drafting-compass','fa-road','fa-leaf','fa-water','fa-satellite-dish','fa-hard-hat','fa-file-contract','fa-building','fa-home','fa-industry','fa-warehouse','fa-store','fa-hospital','fa-school','fa-hotel','fa-car','fa-truck','fa-ship','fa-plane','fa-tools','fa-wrench','fa-cogs','fa-clipboard-check','fa-certificate','fa-stamp','fa-file-alt','fa-folder-open','fa-tasks','fa-check-circle'];
+
+// Default services
+var defaultServices = [
+    {id:'svc_1',icon:'fa-city',name:'Municipality Approvals',desc:'Building permits, trade licenses, signboard permits, municipal NOCs',fullDesc:'Comprehensive Municipality approval services including building permits, trade licenses, signboard permits, and all municipal NOCs required for business operations in Sharjah.',url:'sharjah-municipality-approvals.html',price:'Starting from 500 AED',status:'active',image:''},
+    {id:'svc_2',icon:'fa-fire-extinguisher',name:'Civil Defense (SCD)',desc:'Fire safety certificates, emergency plans, fire NOCs',fullDesc:'Complete Civil Defense services including fire safety certificates, emergency evacuation plans, fire fighting system approvals, and fire NOCs for all building types.',url:'civil-defense-approvals.html',price:'Starting from 800 AED',status:'active',image:''},
+    {id:'svc_3',icon:'fa-bolt',name:'SEWA Approvals',desc:'Electricity connections, water supply, meter installations',fullDesc:'SEWA approval services for electricity connections, water supply connections, meter installations, load increase applications, and temporary power connections.',url:'sewa-approvals.html',price:'Starting from 300 AED',status:'active',image:''},
+    {id:'svc_4',icon:'fa-drafting-compass',name:'Planning & Survey',desc:'Land surveys, Affection Plans, plot demarcation',fullDesc:'Professional planning and survey services including land surveying, Affection Plan preparation, plot demarcation, and planning department approvals.',url:'planning-survey.html',price:'Starting from 1000 AED',status:'active',image:''},
+    {id:'svc_5',icon:'fa-road',name:'RTA Sharjah',desc:'Road permits, traffic NOCs, access approvals',fullDesc:'RTA Sharjah services for road crossing permits, traffic impact assessments, parking approvals, and transportation-related NOCs.',url:'rta-sharjah-approvals.html',price:'Starting from 600 AED',status:'active',image:''},
+    {id:'svc_6',icon:'fa-leaf',name:'Environmental',desc:'Environmental permits, waste management approvals',fullDesc:'Environmental Protection and Development Authority (EPAA) services for environmental impact assessments, waste management permits, and green building certifications.',url:'environmental-waste.html',price:'Starting from 700 AED',status:'active',image:''},
+    {id:'svc_7',icon:'fa-water',name:'Drainage & Irrigation',desc:'Drainage connections, irrigation permits',fullDesc:'Drainage and irrigation services including storm water drainage approvals, irrigation connections, and related infrastructure permits.',url:'drainage-irrigation.html',price:'Starting from 500 AED',status:'active',image:''},
+    {id:'svc_8',icon:'fa-satellite-dish',name:'Telecommunication',desc:'Telecom approvals, network permits',fullDesc:'Telecommunication services for Etisalat and Du connections, telecom infrastructure permits, and communication network approvals.',url:'telecommunication.html',price:'Starting from 400 AED',status:'active',image:''},
+    {id:'svc_9',icon:'fa-hard-hat',name:'Construction & Demolition',desc:'Building permits, demolition approvals',fullDesc:'Construction and demolition permit services including building construction permits, demolition approvals, structural modification permits, and completion certificates.',url:'demolition-construction.html',price:'Starting from 1500 AED',status:'active',image:''},
+    {id:'svc_10',icon:'fa-file-contract',name:'NOC Services',desc:'Various NOCs from multiple authorities',fullDesc:'Comprehensive NOC services from all Sharjah authorities including Municipality, Civil Defense, SEWA, RTA, and other government departments.',url:'noc-services.html',price:'Starting from 250 AED',status:'active',image:''}
+];
+
+function toggleSidebar(){
+    document.getElementById('sidebar').classList.toggle('active');
+    document.getElementById('overlay').classList.toggle('active');
+}
+
+function doLogout(){
+    localStorage.removeItem('sa_admin_logged');
+    localStorage.removeItem('sa_admin_user');
+    window.location.href='index.html';
+}
+
+function checkPermissions(){
+    var userStr = localStorage.getItem('sa_admin_user');
+    if(userStr){
+        try {
+            currentUser = JSON.parse(userStr);
+            // Admin and Editor can manage services
+            canEdit = (currentUser.role === 'admin' || currentUser.role === 'editor');
+        } catch(e) {
+            // If parsing fails, assume admin
+            canEdit = true;
+            currentUser = {name: 'Admin', role: 'admin'};
+        }
+    } else {
+        // Default admin access
+        canEdit = true;
+        currentUser = {name: 'Admin', role: 'admin'};
+    }
+    
+    renderPage();
+}
+
+function renderPage(){
+    var headerActions = document.getElementById('headerActions');
+    var mainArea = document.getElementById('mainArea');
+    
+    if(canEdit){
+        headerActions.innerHTML = '<button class="btn btn-primary" onclick="openAddService()"><i class="fas fa-plus"></i> Add Service</button>';
+        loadServices();
+    } else {
+        headerActions.innerHTML = '<span style="color:#777">View Only Access</span>';
+        loadServicesViewOnly();
+    }
+}
+
+function initServices(){
+    // Only initialize if key never existed
+    if(localStorage.getItem('sa_services') === null){
+        localStorage.setItem('sa_services', JSON.stringify(defaultServices));
+    }
+}
+
+function getServices(){
+    initServices();
+    var services = JSON.parse(localStorage.getItem('sa_services') || '[]');
+    
+    // Normalize data format - convert old format to new format
+    var needsSave = false;
+    for(var i = 0; i < services.length; i++){
+        var s = services[i];
+        // Convert title to name if needed
+        if(s.title && !s.name){
+            s.name = s.title;
+            needsSave = true;
+        }
+        // Convert description to desc if needed
+        if(s.description && !s.desc){
+            s.desc = s.description;
+            needsSave = true;
+        }
+    }
+    
+    // Save normalized data
+    if(needsSave){
+        localStorage.setItem('sa_services', JSON.stringify(services));
+    }
+    
+    return services;
+}
+
+function loadServices(){
+    var services = getServices();
+    document.getElementById('serviceCount').textContent = services.length;
+    
+    var html = '<div class="services-grid">';
+    
+    for(var i = 0; i < services.length; i++){
+        var s = services[i];
+        // Handle both data formats (name/title, desc/description)
+        var serviceName = s.name || s.title || 'Untitled Service';
+        var serviceDesc = s.desc || s.description || '';
+        var serviceIcon = s.icon || 'fa-cog';
+        var serviceStatus = s.status || 'active';
+        var serviceUrl = s.url || '#';
+        var serviceImage = s.image || '';
+        
+        var imageHtml = serviceImage ? '<img src="'+serviceImage+'" alt="'+serviceName+'">' : '<div class="no-image"><i class="fas fa-image"></i></div>';
+        
+        html += '<div class="service-card" style="animation-delay:'+(i*0.1)+'s">'+
+            '<div class="service-image">'+imageHtml+'<span class="service-status '+serviceStatus+'">'+serviceStatus+'</span></div>'+
+            '<div class="service-body">'+
+                '<div class="service-icon-name">'+
+                    '<div class="service-icon"><i class="fas '+serviceIcon+'"></i></div>'+
+                    '<h3>'+serviceName+'</h3>'+
+                '</div>'+
+                '<p>'+serviceDesc+'</p>'+
+                '<div class="service-actions">'+
+                    '<button class="view-btn" onclick="viewService(\''+serviceUrl+'\')"><i class="fas fa-eye"></i> View</button>'+
+                    '<button class="edit-btn" onclick="editService(\''+s.id+'\')"><i class="fas fa-edit"></i> Edit</button>'+
+                    '<button class="delete-btn" onclick="deleteService(\''+s.id+'\')"><i class="fas fa-trash"></i> Delete</button>'+
+                '</div>'+
+            '</div>'+
+        '</div>';
+    }
+    
+    html += '</div>';
+    document.getElementById('mainArea').innerHTML = html;
+}
+
+function loadServicesViewOnly(){
+    var services = getServices();
+    document.getElementById('serviceCount').textContent = services.length;
+    
+    var html = '<div class="services-grid">';
+    
+    for(var i = 0; i < services.length; i++){
+        var s = services[i];
+        // Handle both data formats
+        var serviceName = s.name || s.title || 'Untitled Service';
+        var serviceDesc = s.desc || s.description || '';
+        var serviceIcon = s.icon || 'fa-cog';
+        var serviceStatus = s.status || 'active';
+        var serviceUrl = s.url || '#';
+        var serviceImage = s.image || '';
+        
+        var imageHtml = serviceImage ? '<img src="'+serviceImage+'" alt="'+serviceName+'">' : '<div class="no-image"><i class="fas fa-image"></i></div>';
+        
+        html += '<div class="service-card" style="animation-delay:'+(i*0.1)+'s">'+
+            '<div class="service-image">'+imageHtml+'<span class="service-status '+serviceStatus+'">'+serviceStatus+'</span></div>'+
+            '<div class="service-body">'+
+                '<div class="service-icon-name">'+
+                    '<div class="service-icon"><i class="fas '+serviceIcon+'"></i></div>'+
+                    '<h3>'+serviceName+'</h3>'+
+                '</div>'+
+                '<p>'+serviceDesc+'</p>'+
+                '<div class="service-actions">'+
+                    '<button class="view-btn" onclick="viewService(\''+serviceUrl+'\')" style="flex:1"><i class="fas fa-eye"></i> View on Site</button>'+
+                '</div>'+
+            '</div>'+
+        '</div>';
+    }
+    
+    html += '</div>';
+    document.getElementById('mainArea').innerHTML = html;
+}
+
+function renderIconSelector(selected){
+    var html = '';
+    for(var i = 0; i < icons.length; i++){
+        var sel = (icons[i] === selected) ? 'selected' : '';
+        html += '<div class="icon-option '+sel+'" onclick="selectIcon(\''+icons[i]+'\')" data-icon="'+icons[i]+'"><i class="fas '+icons[i]+'"></i></div>';
+    }
+    document.getElementById('iconSelector').innerHTML = html;
+}
+
+function selectIcon(icon){
+    var options = document.querySelectorAll('.icon-option');
+    for(var i = 0; i < options.length; i++){
+        options[i].classList.remove('selected');
+        if(options[i].getAttribute('data-icon') === icon){
+            options[i].classList.add('selected');
+        }
+    }
+}
+
+function getSelectedIcon(){
+    var selected = document.querySelector('.icon-option.selected');
+    return selected ? selected.getAttribute('data-icon') : 'fa-file-contract';
+}
+
+function openAddService(){
+    document.getElementById('serviceId').value = '';
+    document.getElementById('serviceName').value = '';
+    document.getElementById('serviceDesc').value = '';
+    document.getElementById('serviceFullDesc').value = '';
+    document.getElementById('serviceUrl').value = '';
+    document.getElementById('servicePrice').value = '';
+    document.getElementById('serviceStatus').value = 'active';
+    document.getElementById('imageData').value = '';
+    document.getElementById('imageUpload').innerHTML = '<i class="fas fa-cloud-upload-alt"></i><p>Click to upload image</p><small>Recommended: 800x500px, Max 2MB</small>';
+    document.getElementById('imageUpload').classList.remove('has-image');
+    renderIconSelector('fa-file-contract');
+    document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Add Service';
+    document.getElementById('serviceModal').classList.add('active');
+}
+
+function editService(id){
+    var services = getServices();
+    var service = null;
+    for(var i = 0; i < services.length; i++){
+        if(services[i].id === id){
+            service = services[i];
+            break;
+        }
+    }
+    
+    if(!service) return;
+    
+    // Handle both data formats
+    document.getElementById('serviceId').value = service.id;
+    document.getElementById('serviceName').value = service.name || service.title || '';
+    document.getElementById('serviceDesc').value = service.desc || service.description || '';
+    document.getElementById('serviceFullDesc').value = service.fullDesc || '';
+    document.getElementById('serviceUrl').value = service.url || '';
+    document.getElementById('servicePrice').value = service.price || '';
+    document.getElementById('serviceStatus').value = service.status || 'active';
+    document.getElementById('imageData').value = service.image || '';
+    
+    if(service.image){
+        document.getElementById('imageUpload').innerHTML = '<img src="'+service.image+'" alt="Service Image"><p style="margin-top:10px">Click to change image</p>';
+        document.getElementById('imageUpload').classList.add('has-image');
+    } else {
+        document.getElementById('imageUpload').innerHTML = '<i class="fas fa-cloud-upload-alt"></i><p>Click to upload image</p><small>Recommended: 800x500px, Max 2MB</small>';
+        document.getElementById('imageUpload').classList.remove('has-image');
+    }
+    
+    renderIconSelector(service.icon || 'fa-cog');
+    document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Service';
+    document.getElementById('serviceModal').classList.add('active');
+}
+
+function closeModal(){
+    document.getElementById('serviceModal').classList.remove('active');
+}
+
+function previewImage(input){
+    if(input.files && input.files[0]){
+        var file = input.files[0];
+        
+        // Check file size (max 2MB)
+        if(file.size > 2 * 1024 * 1024){
+            alert('Image size must be less than 2MB');
+            return;
+        }
+        
+        var reader = new FileReader();
+        reader.onload = function(e){
+            document.getElementById('imageData').value = e.target.result;
+            document.getElementById('imageUpload').innerHTML = '<img src="'+e.target.result+'" alt="Preview"><p style="margin-top:10px">Click to change image</p>';
+            document.getElementById('imageUpload').classList.add('has-image');
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function saveService(){
+    var id = document.getElementById('serviceId').value;
+    var name = document.getElementById('serviceName').value.trim();
+    var desc = document.getElementById('serviceDesc').value.trim();
+    var fullDesc = document.getElementById('serviceFullDesc').value.trim();
+    var url = document.getElementById('serviceUrl').value.trim();
+    var price = document.getElementById('servicePrice').value.trim();
+    var status = document.getElementById('serviceStatus').value;
+    var image = document.getElementById('imageData').value;
+    var icon = getSelectedIcon();
+    
+    if(!name || !desc){
+        alert('Please fill service name and description');
+        return;
+    }
+    
+    // Auto-generate URL if empty
+    if(!url){
+        url = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.html';
+    }
+    
+    var services = getServices();
+    
+    if(id){
+        // Update existing
+        for(var i = 0; i < services.length; i++){
+            if(services[i].id === id){
+                services[i].name = name;
+                services[i].desc = desc;
+                services[i].fullDesc = fullDesc;
+                services[i].url = url;
+                services[i].price = price;
+                services[i].status = status;
+                services[i].icon = icon;
+                if(image) services[i].image = image;
+                services[i].updatedAt = new Date().toISOString();
+                services[i].updatedBy = currentUser.name;
+                break;
+            }
+        }
+    } else {
+        // Add new
+        services.push({
+            id: 'svc_' + Date.now(),
+            name: name,
+            desc: desc,
+            fullDesc: fullDesc,
+            url: url,
+            price: price,
+            status: status,
+            icon: icon,
+            image: image,
+            createdAt: new Date().toISOString(),
+            createdBy: currentUser.name
+        });
+    }
+    
+    localStorage.setItem('sa_services', JSON.stringify(services));
+    closeModal();
+    loadServices();
+    alert(id ? 'Service updated successfully!' : 'Service added successfully!');
+}
+
+function deleteService(id){
+    if(!confirm('Are you sure you want to delete this service?')) return;
+    
+    var services = getServices();
+    var newServices = [];
+    for(var i = 0; i < services.length; i++){
+        if(services[i].id !== id){
+            newServices.push(services[i]);
+        }
+    }
+    
+    localStorage.setItem('sa_services', JSON.stringify(newServices));
+    loadServices();
+    alert('Service deleted!');
+}
+
+function viewService(url){
+    if(url){
+        window.open('../services/' + url, '_blank');
+    }
+}
+
+// Initialize
+checkPermissions();
+// Ensure services are loaded
+setTimeout(function(){ loadServices(); }, 100);
+</script>
+</body>
+</html>

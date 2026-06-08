@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Sharjah Approval</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Source Sans Pro',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);padding:20px}
+        .login-container{width:100%;max-width:420px}
+        .login-card{background:#fff;border-radius:24px;padding:50px 40px;box-shadow:0 25px 80px rgba(0,0,0,0.3)}
+        .login-header{text-align:center;margin-bottom:40px}
+        .login-logo{width:80px;height:80px;margin:0 auto 20px;background:linear-gradient(135deg,#0a6e4f,#0d8a63);border-radius:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(10,110,79,0.3)}
+        .login-logo img{width:60px;height:60px;object-fit:contain}
+        .login-header h1{font-size:1.8rem;color:#1a1a2e;margin-bottom:8px}
+        .login-header p{color:#777;font-size:0.95rem}
+        .form-group{margin-bottom:25px}
+        .form-group label{display:block;margin-bottom:8px;font-weight:600;color:#333;font-size:0.9rem}
+        .input-wrapper{position:relative}
+        .input-wrapper i{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:#aaa;font-size:1.1rem}
+        .form-group input{width:100%;padding:15px 15px 15px 50px;border:2px solid #e0e0e0;border-radius:12px;font-size:1rem;transition:all 0.3s}
+        .form-group input:focus{border-color:#0a6e4f;outline:none;box-shadow:0 0 0 4px rgba(10,110,79,0.1)}
+        .form-options{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;font-size:0.9rem}
+        .remember-me{display:flex;align-items:center;gap:8px;color:#555}
+        .remember-me input{width:18px;height:18px;cursor:pointer}
+        .forgot-link{color:#0a6e4f;font-weight:600}
+        .forgot-link:hover{text-decoration:underline}
+        .login-btn{width:100%;padding:16px;background:linear-gradient(135deg,#0a6e4f,#0d8a63);color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(10,110,79,0.3)}
+        .login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(10,110,79,0.4)}
+        .login-btn:disabled{opacity:0.7;cursor:not-allowed;transform:none}
+        .back-link{display:block;text-align:center;margin-top:25px;color:#777;font-size:0.9rem}
+        .back-link a{color:#0a6e4f;font-weight:600;margin-left:5px}
+        .error-msg{background:#ffebee;color:#c62828;padding:12px 15px;border-radius:10px;margin-bottom:20px;font-size:0.9rem;display:none}
+        .error-msg.show{display:block}
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo"><img src="../logo.png" alt="Logo"></div>
+                <h1>Admin Login</h1>
+                <p>Enter your credentials to continue</p>
+            </div>
+            <div class="error-msg" id="errorMsg">Invalid email or password</div>
+            <form id="loginForm" onsubmit="return handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="Enter your email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Enter your password" required>
+                    </div>
+                </div>
+                <div class="form-options">
+                    <label class="remember-me"><input type="checkbox" id="remember"> Remember me</label>
+                    <a href="#" class="forgot-link">Forgot Password?</a>
+                </div>
+                <button type="submit" class="login-btn" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+            </form>
+            <p class="back-link">Go back to<a href="../index.html">Website</a></p>
+        </div>
+    </div>
+    
+    <script>
+        // Clear any existing login on page load
+        // This ensures user must login each time they visit admin
+        
+        // Initialize default data function
+        function initializeDefaultData() {
+            // Check and init blogs
+            var storedBlogs = localStorage.getItem('sa_blogs');
+            var needsBlogsInit = !storedBlogs || storedBlogs === '[]' || storedBlogs === 'null' || storedBlogs === 'undefined';
+            if(!needsBlogsInit){
+                try {
+                    var parsed = JSON.parse(storedBlogs);
+                    if(!Array.isArray(parsed) || parsed.length === 0) needsBlogsInit = true;
+                } catch(e){ needsBlogsInit = true; }
+            }
+            if(needsBlogsInit){
+                localStorage.setItem('sa_blogs', JSON.stringify([
+                    {id:'blog_001',title:'Sharjah Municipality Approval Guide 2025',category:'Municipality',excerpt:'Learn everything about Sharjah Municipality approval process.',content:'<p>Complete guide.</p>',featuredImage:'',status:'published',readTime:'5',author:'Admin',tags:'municipality',metaDescription:'Guide',views:245,createdAt:'2025-01-05T10:00:00Z',updatedAt:'2025-01-05T10:00:00Z'},
+                    {id:'blog_002',title:'SEWA Connection Requirements',category:'SEWA',excerpt:'All you need to know about SEWA approvals.',content:'<p>Requirements.</p>',featuredImage:'',status:'published',readTime:'4',author:'Admin',tags:'sewa',metaDescription:'SEWA guide',views:189,createdAt:'2025-01-03T14:30:00Z',updatedAt:'2025-01-03T14:30:00Z'},
+                    {id:'blog_003',title:'Civil Defense Fire Safety Compliance',category:'Civil Defense',excerpt:'Essential guide to fire safety.',content:'<p>Fire safety.</p>',featuredImage:'',status:'published',readTime:'6',author:'Admin',tags:'civil defense',metaDescription:'Guide',views:156,createdAt:'2025-01-01T09:00:00Z',updatedAt:'2025-01-01T09:00:00Z'}
+                ]));
+            }
+            // Check and init services
+            var storedServices = localStorage.getItem('sa_services');
+            var needsServicesInit = !storedServices || storedServices === '[]' || storedServices === 'null' || storedServices === 'undefined';
+            if(!needsServicesInit){
+                try {
+                    var parsed = JSON.parse(storedServices);
+                    if(!Array.isArray(parsed) || parsed.length === 0) needsServicesInit = true;
+                } catch(e){ needsServicesInit = true; }
+            }
+            if(needsServicesInit){
+                localStorage.setItem('sa_services', JSON.stringify([
+                    {id:'svc_1',icon:'fa-city',name:'Municipality Approvals',desc:'Building permits, trade licenses',fullDesc:'Municipality services.',url:'../services/sharjah-municipality-approvals.html',price:'500 AED',status:'active',image:''},
+                    {id:'svc_2',icon:'fa-fire-extinguisher',name:'Civil Defense',desc:'Fire safety certificates',fullDesc:'Civil Defense services.',url:'../services/civil-defense-approvals.html',price:'800 AED',status:'active',image:''},
+                    {id:'svc_3',icon:'fa-bolt',name:'SEWA Approvals',desc:'Electricity connections',fullDesc:'SEWA services.',url:'../services/sewa-approvals.html',price:'300 AED',status:'active',image:''},
+                    {id:'svc_4',icon:'fa-drafting-compass',name:'Planning & Survey',desc:'Land surveys',fullDesc:'Planning services.',url:'../services/planning-survey.html',price:'1000 AED',status:'active',image:''},
+                    {id:'svc_5',icon:'fa-road',name:'RTA Sharjah',desc:'Road permits',fullDesc:'RTA services.',url:'../services/rta-sharjah-approvals.html',price:'600 AED',status:'active',image:''},
+                    {id:'svc_6',icon:'fa-leaf',name:'Environmental',desc:'Environmental permits',fullDesc:'Environmental services.',url:'../services/environmental-waste.html',price:'700 AED',status:'active',image:''},
+                    {id:'svc_7',icon:'fa-water',name:'Drainage & Irrigation',desc:'Drainage connections',fullDesc:'Drainage services.',url:'../services/drainage-irrigation.html',price:'500 AED',status:'active',image:''},
+                    {id:'svc_8',icon:'fa-satellite-dish',name:'Telecommunication',desc:'Telecom approvals',fullDesc:'Telecom services.',url:'../services/telecommunication.html',price:'400 AED',status:'active',image:''},
+                    {id:'svc_9',icon:'fa-hard-hat',name:'Construction',desc:'Building permits',fullDesc:'Construction services.',url:'../services/demolition-construction.html',price:'1500 AED',status:'active',image:''},
+                    {id:'svc_10',icon:'fa-file-contract',name:'NOC Services',desc:'Various NOCs',fullDesc:'NOC services.',url:'../services/noc-services.html',price:'250 AED',status:'active',image:''}
+                ]));
+            }
+        }
+        
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            var email = document.getElementById('email').value.trim();
+            var password = document.getElementById('password').value;
+            var errorMsg = document.getElementById('errorMsg');
+            var loginBtn = document.getElementById('loginBtn');
+            
+            // Hide previous error
+            errorMsg.classList.remove('show');
+            
+            // Default credentials
+            var validCredentials = [
+                { email: 'admin@sharjahapproval.ae', password: 'Admin@123' },
+                { email: 'admin@sharjahapproval.com', password: 'Admin@123' }
+            ];
+            
+            // Check stored users too
+            var users = JSON.parse(localStorage.getItem('sa_users') || '[]');
+            for (var i = 0; i < users.length; i++) {
+                if (users[i].status === 'active') {
+                    validCredentials.push({ email: users[i].email, password: users[i].password });
+                }
+            }
+            
+            // Validate
+            var isValid = false;
+            var loggedUser = null;
+            for (var j = 0; j < validCredentials.length; j++) {
+                if (email === validCredentials[j].email && password === validCredentials[j].password) {
+                    isValid = true;
+                    loggedUser = validCredentials[j].email;
+                    break;
+                }
+            }
+            
+            if (isValid) {
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+                
+                // Set login status
+                localStorage.setItem('sa_admin_logged', 'true');
+                // Store user object with role
+                var userObj = {name: 'Admin', email: loggedUser, role: 'admin'};
+                localStorage.setItem('sa_admin_user', JSON.stringify(userObj));
+                
+                // Initialize default data if empty
+                initializeDefaultData();
+                
+                // Redirect after brief delay
+                setTimeout(function() {
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+            } else {
+                errorMsg.classList.add('show');
+                document.getElementById('password').value = '';
+            }
+            
+            return false;
+        }
+        
+        // Check if already logged in - redirect to dashboard
+        if (localStorage.getItem('sa_admin_logged') === 'true') {
+            // User is already logged in, redirect to dashboard
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>

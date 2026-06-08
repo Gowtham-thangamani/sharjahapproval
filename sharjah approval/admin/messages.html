@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - Sharjah Approval Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="View contact form messages for Sharjah Approval.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Source Sans Pro',sans-serif;background:#f5f6fa;min-height:100vh}
+        .admin-wrapper{display:flex;min-height:100vh}
+
+        /* Sidebar */
+        .sidebar{width:250px;background:linear-gradient(180deg,#1a1a2e 0%,#16213e 100%);color:#fff;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+        .sidebar-header{padding:20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,0.1)}
+        .sidebar-logo{width:45px;height:45px;border-radius:12px;overflow:hidden;background:#fff}
+        .sidebar-logo img{width:100%;height:100%;object-fit:cover}
+        .sidebar-brand h2{font-size:1.1rem;font-weight:600}
+        .sidebar-brand span{font-size:0.75rem;opacity:0.7}
+        .sidebar-menu{padding:15px 0}
+        .menu-section{font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;padding:15px 20px 8px;opacity:0.5}
+        .menu-item{display:flex;align-items:center;gap:12px;padding:12px 20px;color:rgba(255,255,255,0.7);text-decoration:none;transition:all 0.3s ease;border-left:3px solid transparent}
+        .menu-item:hover{background:rgba(255,255,255,0.1);color:#fff;border-left-color:#0a6e4f}
+        .menu-item.active{background:linear-gradient(90deg,rgba(10,110,79,0.3),transparent);color:#fff;border-left-color:#0a6e4f}
+        .menu-item i{width:20px;text-align:center;font-size:1.1rem}
+        .menu-item .badge{background:linear-gradient(135deg,#0a6e4f,#0d8a63);font-size:0.7rem;padding:3px 10px;border-radius:12px;margin-left:auto}
+        .menu-item .badge.alert{background:linear-gradient(135deg,#e74c3c,#c0392b);animation:badgePulse 2s infinite}
+        .menu-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);margin:15px 20px}
+        @keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+        /* Main Content */
+        .main-content{flex:1;margin-left:250px;padding:20px}
+        .top-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;background:#fff;padding:20px 25px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);flex-wrap:wrap;gap:15px}
+        .page-title{font-size:1.5rem;color:#1a1a2e;font-weight:700;display:flex;align-items:center;gap:12px}
+        .header-actions{display:flex;align-items:center;gap:15px}
+        .header-stat{display:flex;align-items:center;gap:8px;font-size:0.9rem;color:#777}
+        .header-stat strong{color:#1a1a2e;font-size:1.1rem}
+        .header-stat .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+        .header-stat .dot.green{background:#0a6e4f}
+        .header-stat .dot.red{background:#e74c3c}
+
+        .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:none;border-radius:10px;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.3s}
+        .btn-primary{background:#0a6e4f;color:#fff}
+        .btn-primary:hover{background:#085c42;transform:translateY(-1px)}
+        .btn-outline{background:#fff;color:#777;border:1px solid #e0e0e0}
+        .btn-outline:hover{background:#f8f8f8;color:#333}
+
+        /* Messages Container */
+        .messages-container{display:grid;grid-template-columns:1fr 1fr;gap:20px;min-height:calc(100vh - 140px)}
+        .messages-list-panel{background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);overflow:hidden;display:flex;flex-direction:column}
+        .messages-detail-panel{background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);overflow:hidden;display:flex;flex-direction:column}
+
+        .panel-header{padding:18px 25px;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center}
+        .panel-header h3{font-size:1rem;color:#1a1a2e;font-weight:600;display:flex;align-items:center;gap:10px}
+        .panel-header h3 i{color:#0a6e4f}
+
+        /* Message List Items */
+        .messages-scroll{flex:1;overflow-y:auto;max-height:calc(100vh - 230px)}
+        .msg-item{display:flex;align-items:flex-start;gap:15px;padding:18px 25px;border-bottom:1px solid #f5f5f5;cursor:pointer;transition:all 0.2s}
+        .msg-item:hover{background:#f8fdf9}
+        .msg-item.active{background:linear-gradient(135deg,rgba(10,110,79,0.05),rgba(10,110,79,0.02));border-left:3px solid #0a6e4f}
+        .msg-item.unread{background:#fafffe}
+        .msg-item.unread .msg-item-name{font-weight:700;color:#0a6e4f}
+        .msg-item.unread::before{content:'';position:absolute;left:10px;top:50%;transform:translateY(-50%);width:8px;height:8px;background:#0a6e4f;border-radius:50%}
+        .msg-item{position:relative}
+
+        .msg-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:#fff;flex-shrink:0}
+        .msg-item-content{flex:1;min-width:0}
+        .msg-item-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+        .msg-item-name{font-weight:600;color:#1a1a2e;font-size:0.95rem}
+        .msg-item-time{font-size:0.75rem;color:#aaa;white-space:nowrap}
+        .msg-item-service{font-size:0.72rem;color:#0a6e4f;background:rgba(10,110,79,0.1);padding:2px 8px;border-radius:8px;display:inline-block;margin-bottom:4px}
+        .msg-item-preview{font-size:0.85rem;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+        /* Message Detail View */
+        .detail-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#aaa;padding:40px}
+        .detail-empty i{font-size:3rem;margin-bottom:15px;color:#ddd}
+        .detail-empty p{font-size:1rem}
+        .detail-empty small{font-size:0.85rem;margin-top:5px}
+
+        .detail-header{padding:25px;border-bottom:1px solid #f0f0f0}
+        .detail-sender{display:flex;align-items:center;gap:15px;margin-bottom:15px}
+        .detail-sender .msg-avatar{width:50px;height:50px;font-size:1.3rem}
+        .detail-sender-info h3{font-size:1.1rem;color:#1a1a2e;margin-bottom:3px}
+        .detail-sender-info p{font-size:0.85rem;color:#777}
+
+        .detail-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+        .detail-meta-item{display:flex;align-items:center;gap:10px;padding:10px 15px;background:#f8f9fa;border-radius:10px}
+        .detail-meta-item i{color:#0a6e4f;width:16px;text-align:center}
+        .detail-meta-item span{font-size:0.85rem;color:#555}
+        .detail-meta-item a{color:#0a6e4f;text-decoration:none;font-size:0.85rem}
+        .detail-meta-item a:hover{text-decoration:underline}
+
+        .detail-body{flex:1;padding:25px;overflow-y:auto}
+        .detail-body .label{font-size:0.8rem;text-transform:uppercase;color:#aaa;letter-spacing:0.5px;margin-bottom:10px;font-weight:600}
+        .detail-body .message-text{font-size:1rem;color:#333;line-height:1.8;background:#f8f9fa;padding:20px;border-radius:12px;border-left:4px solid #0a6e4f}
+
+        .detail-actions{padding:15px 25px;border-top:1px solid #f0f0f0;display:flex;gap:10px}
+        .detail-actions .btn-reply{background:#0a6e4f;color:#fff;flex:1}
+        .detail-actions .btn-reply:hover{background:#085c42}
+        .detail-actions .btn-delete{background:#fff;color:#e74c3c;border:1px solid #fdd}
+        .detail-actions .btn-delete:hover{background:#fee;border-color:#e74c3c}
+
+        /* Empty state */
+        .empty-state{text-align:center;padding:60px 30px;color:#999}
+        .empty-state i{font-size:3rem;color:#ddd;margin-bottom:15px;display:block}
+
+        @media(max-width:992px){
+            .sidebar{width:70px}
+            .sidebar-brand,.menu-section,.menu-item span,.menu-item .badge{display:none}
+            .sidebar-header{justify-content:center;padding:15px}
+            .menu-item{justify-content:center;padding:15px}
+            .main-content{margin-left:70px}
+            .messages-container{grid-template-columns:1fr}
+            .messages-detail-panel{display:none}
+            .messages-detail-panel.active{display:flex}
+        }
+        @media(max-width:768px){
+            .sidebar{transform:translateX(-100%);width:250px;transition:0.3s}
+            .sidebar.active{transform:translateX(0)}
+            .sidebar-brand,.menu-section,.menu-item span,.menu-item .badge{display:block}
+            .main-content{margin-left:0}
+            .messages-container{grid-template-columns:1fr}
+            .header-actions{flex-wrap:wrap}
+        }
+        .mobile-menu-btn{display:none;position:fixed;top:15px;left:15px;z-index:101;background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;border:none;padding:12px 15px;border-radius:10px;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.2)}
+        @media(max-width:768px){.mobile-menu-btn{display:block}}
+        .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);z-index:99}.overlay.active{display:block}
+    </style>
+</head>
+<body>
+<script>if(localStorage.getItem('sa_admin_logged')!=='true'){window.location.href='index.html';}</script>
+
+<button type="button" class="mobile-menu-btn" onclick="toggleSidebar()" title="Toggle menu"><i class="fas fa-bars"></i></button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="admin-wrapper">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo"><img src="../logo.png" alt="Logo"></div>
+            <div class="sidebar-brand"><h2>Sharjah</h2><span>Approval</span></div>
+        </div>
+        <nav class="sidebar-menu">
+            <div class="menu-section">CONTENT MANAGEMENT</div>
+            <a href="dashboard.html" class="menu-item"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+            <a href="blogs.html" class="menu-item"><i class="fas fa-newspaper"></i><span>Blogs</span></a>
+            <a href="services.html" class="menu-item"><i class="fas fa-concierge-bell"></i><span>Services</span></a>
+            <a href="subscribers.html" class="menu-item"><i class="fas fa-users"></i><span>Subscribers</span></a>
+            <a href="messages.html" class="menu-item active"><i class="fas fa-envelope"></i><span>Messages</span><span class="badge alert" id="sidebarMsgBadge" style="display:none">0</span></a>
+            <div class="menu-section">ANALYTICS</div>
+            <a href="analytics.html" class="menu-item"><i class="fas fa-chart-line"></i><span>Live Analytics</span></a>
+            <div class="menu-section">USER MANAGEMENT</div>
+            <a href="users.html" class="menu-item"><i class="fas fa-user-cog"></i><span>Users</span></a>
+            <a href="profile.html" class="menu-item"><i class="fas fa-id-card"></i><span>My Profile</span></a>
+            <div class="menu-section">SETTINGS</div>
+            <a href="settings.html" class="menu-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+            <div class="menu-divider"></div>
+            <a href="../index.html" class="menu-item" target="_blank"><i class="fas fa-external-link-alt"></i><span>View Site</span></a>
+            <a href="javascript:void(0)" class="menu-item" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <h1 class="page-title"><i class="fas fa-envelope" style="color:#0a6e4f"></i> Messages</h1>
+            <div class="header-actions">
+                <div class="header-stat"><span class="dot green"></span> Total: <strong id="totalCount">0</strong></div>
+                <div class="header-stat"><span class="dot red"></span> Unread: <strong id="unreadCount">0</strong></div>
+                <button type="button" class="btn btn-outline" onclick="markAllRead()" title="Mark all as read"><i class="fas fa-check-double"></i> Mark All Read</button>
+            </div>
+        </header>
+
+        <div class="messages-container">
+            <!-- Left: Message List -->
+            <div class="messages-list-panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-inbox"></i> Inbox</h3>
+                    <button type="button" class="btn btn-outline" onclick="loadMessages()" title="Refresh messages" style="padding:6px 12px"><i class="fas fa-sync-alt"></i></button>
+                </div>
+                <div class="messages-scroll" id="messagesList">
+                    <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading messages...</p></div>
+                </div>
+            </div>
+
+            <!-- Right: Message Detail -->
+            <div class="messages-detail-panel" id="detailPanel">
+                <div class="detail-empty" id="detailEmpty">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <p>Select a message to read</p>
+                    <small>Click on any message from the left panel</small>
+                </div>
+                <div id="detailContent" style="display:none;flex-direction:column;height:100%">
+                    <div class="detail-header">
+                        <div class="detail-sender">
+                            <div class="msg-avatar" id="detailAvatar">A</div>
+                            <div class="detail-sender-info">
+                                <h3 id="detailName">Name</h3>
+                                <p id="detailDate">Date</p>
+                            </div>
+                        </div>
+                        <div class="detail-meta">
+                            <div class="detail-meta-item"><i class="fas fa-envelope"></i><a href="#" id="detailEmail">email@example.com</a></div>
+                            <div class="detail-meta-item"><i class="fas fa-phone"></i><a href="#" id="detailPhone">+971...</a></div>
+                            <div class="detail-meta-item"><i class="fas fa-concierge-bell"></i><span id="detailService">Service</span></div>
+                            <div class="detail-meta-item"><i class="fas fa-clock"></i><span id="detailTime">Time</span></div>
+                        </div>
+                    </div>
+                    <div class="detail-body">
+                        <div class="label">Message</div>
+                        <div class="message-text" id="detailMessage">Message content here...</div>
+                    </div>
+                    <div class="detail-actions">
+                        <a href="#" class="btn btn-reply" id="replyBtn" title="Reply via email"><i class="fas fa-reply"></i> Reply via Email</a>
+                        <button type="button" class="btn btn-delete" id="deleteBtn" onclick="deleteSelected()" title="Delete message"><i class="fas fa-trash"></i> Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('active');document.getElementById('overlay').classList.toggle('active')}
+function doLogout(){localStorage.removeItem('sa_admin_logged');localStorage.removeItem('sa_admin_user');window.location.href='index.html'}
+
+var avatarColors = ['#667eea','#11998e','#f093fb','#4facfe','#e74c3c','#f39c12','#2ecc71','#9b59b6'];
+function getAvatarColor(name){var sum=0;for(var i=0;i<name.length;i++)sum+=name.charCodeAt(i);return avatarColors[sum%avatarColors.length]}
+
+var allMessages = [];
+var selectedId = null;
+
+function escapeHtml(str){
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str || ''));
+    return div.innerHTML;
+}
+
+function timeAgo(ts){
+    var diff = Math.floor((Date.now() - new Date(ts).getTime()) / 1000);
+    if(diff < 60) return 'Just now';
+    if(diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if(diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    if(diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+    return new Date(ts).toLocaleDateString();
+}
+
+function loadMessages(){
+    fetch('api/messages.php?action=list')
+        .then(function(r){return r.json()})
+        .then(function(data){
+            if(!data.success) return;
+            allMessages = data.messages;
+            renderList(data.total, data.unread);
+        })
+        .catch(function(){
+            // Fallback to localStorage
+            allMessages = JSON.parse(localStorage.getItem('sa_messages') || '[]');
+            renderList(allMessages.length, allMessages.length);
+        });
+}
+
+function renderList(total, unread){
+    document.getElementById('totalCount').textContent = total;
+    document.getElementById('unreadCount').textContent = unread;
+
+    // Sidebar badge
+    var badge = document.getElementById('sidebarMsgBadge');
+    if(unread > 0){badge.textContent = unread;badge.style.display = 'inline-block'} else {badge.style.display = 'none'}
+
+    var container = document.getElementById('messagesList');
+    if(allMessages.length === 0){
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>No messages yet</p><small>Contact form submissions will appear here</small></div>';
+        return;
+    }
+
+    var html = '';
+    for(var i = 0; i < allMessages.length; i++){
+        var m = allMessages[i];
+        var initial = (m.name || 'U').charAt(0).toUpperCase();
+        var color = getAvatarColor(m.name || 'User');
+        var preview = (m.message || '').length > 50 ? m.message.substring(0, 50) + '...' : (m.message || '');
+        var unreadClass = m.read ? '' : ' unread';
+        var activeClass = m.id === selectedId ? ' active' : '';
+
+        html += '<div class="msg-item' + unreadClass + activeClass + '" onclick="selectMessage(\'' + m.id + '\')">';
+        html += '<div class="msg-avatar" style="background:' + color + '">' + initial + '</div>';
+        html += '<div class="msg-item-content">';
+        html += '<div class="msg-item-top"><span class="msg-item-name">' + escapeHtml(m.name) + '</span><span class="msg-item-time">' + timeAgo(m.createdAt) + '</span></div>';
+        if(m.service && m.service !== 'General Inquiry') html += '<span class="msg-item-service">' + escapeHtml(m.service) + '</span>';
+        html += '<div class="msg-item-preview">' + escapeHtml(preview) + '</div>';
+        html += '</div></div>';
+    }
+    container.innerHTML = html;
+}
+
+function selectMessage(id){
+    selectedId = id;
+    var msg = null;
+    for(var i = 0; i < allMessages.length; i++){
+        if(allMessages[i].id === id){msg = allMessages[i];break}
+    }
+    if(!msg) return;
+
+    // Mark as read via API
+    if(!msg.read){
+        fetch('api/messages.php?action=read&id=' + encodeURIComponent(id)).then(function(){
+            msg.read = true;
+            var unread = 0;
+            for(var j = 0; j < allMessages.length; j++){if(!allMessages[j].read)unread++}
+            renderList(allMessages.length, unread);
+        }).catch(function(){});
+    }
+
+    // Show detail
+    document.getElementById('detailEmpty').style.display = 'none';
+    var detailContent = document.getElementById('detailContent');
+    detailContent.style.display = 'flex';
+
+    var initial = (msg.name || 'U').charAt(0).toUpperCase();
+    var color = getAvatarColor(msg.name || 'User');
+    document.getElementById('detailAvatar').textContent = initial;
+    document.getElementById('detailAvatar').style.background = color;
+    document.getElementById('detailName').textContent = msg.name;
+    document.getElementById('detailDate').textContent = new Date(msg.createdAt).toLocaleString();
+    document.getElementById('detailEmail').textContent = msg.email;
+    document.getElementById('detailEmail').href = 'mailto:' + msg.email;
+    document.getElementById('detailPhone').textContent = msg.phone || 'N/A';
+    document.getElementById('detailPhone').href = msg.phone ? 'tel:' + msg.phone : '#';
+    document.getElementById('detailService').textContent = msg.service || 'General Inquiry';
+    document.getElementById('detailTime').textContent = timeAgo(msg.createdAt);
+    document.getElementById('detailMessage').textContent = msg.message;
+    document.getElementById('replyBtn').href = 'mailto:' + msg.email + '?subject=Re: ' + encodeURIComponent(msg.service || 'Your Inquiry') + ' - Sharjah Approval';
+
+    // Show detail panel on mobile
+    document.getElementById('detailPanel').classList.add('active');
+
+    // Re-render to highlight active
+    renderList(allMessages.length, parseInt(document.getElementById('unreadCount').textContent));
+}
+
+function deleteSelected(){
+    if(!selectedId) return;
+    if(!confirm('Delete this message?')) return;
+
+    fetch('api/messages.php?action=delete&id=' + encodeURIComponent(selectedId))
+        .then(function(){
+            selectedId = null;
+            document.getElementById('detailEmpty').style.display = 'flex';
+            document.getElementById('detailContent').style.display = 'none';
+            loadMessages();
+        })
+        .catch(function(){
+            // Fallback localStorage delete
+            var msgs = JSON.parse(localStorage.getItem('sa_messages') || '[]');
+            var filtered = msgs.filter(function(m){return m.id !== selectedId});
+            localStorage.setItem('sa_messages', JSON.stringify(filtered));
+            selectedId = null;
+            loadMessages();
+        });
+}
+
+function markAllRead(){
+    fetch('api/messages.php?action=mark_all_read')
+        .then(function(){loadMessages()})
+        .catch(function(){});
+}
+
+// Initial load and auto-refresh
+loadMessages();
+setInterval(loadMessages, 15000);
+</script>
+</body>
+</html>

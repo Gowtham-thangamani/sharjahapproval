@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Sharjah Approval | Get in Touch</title>
+    <meta name="description" content="Contact Sharjah Approval for expert authority approval services. Get free consultation for permits, NOCs and government approvals in UAE.">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="canonical" href="https://www.sharjahapproval.com/contact">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HHY6HYPH2K"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HHY6HYPH2K');</script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-green: #0a6e4f;
+            --primary-dark: #064a35;
+            --accent-gold: #c4a35a;
+            --text-dark: #1a1a2e;
+            --text-gray: #555;
+            --bg-light: #f8f9fa;
+            --white: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-light);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .logo-text span:last-child {
+            font-size: 0.75rem;
+            color: #777;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-green);
+        }
+
+        .btn {
+            padding: 12px 28px;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-dark));
+            color: white !important;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(10,110,79,0.3);
+        }
+
+        /* Hero Section */
+        .page-hero {
+            background: linear-gradient(135deg, #f8fdf9, #f0f7f4);
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+
+        .page-hero h1 {
+            font-size: 2.5rem;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 15px;
+        }
+
+        .highlight {
+            color: var(--primary-green);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 60px 0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 40px;
+        }
+
+        .contact-info h2, .contact-form-card h2 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .contact-item .icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .contact-item h4 {
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .contact-item p, .contact-item a {
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        .contact-item a {
+            text-decoration: none;
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+
+        /* Form */
+        .contact-form-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        label span {
+            color: #dc3545;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(10,110,79,0.3);
+        }
+
+        /* Loading Spinner */
+        .form-loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        /* Footer styles in /assets/css/footer.css */
+
+        /* WhatsApp Float */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 999;
+        }
+
+        .floating-whatsapp a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #25D366;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 5px 25px rgba(37,211,102,0.4);
+            transition: all 0.3s;
+        }
+
+        .floating-whatsapp a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(37,211,102,0.5);
+        }
+
+        .mobile-toggle {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 350px;
+                height: 100vh;
+                background: #fff;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 100px 40px;
+                gap: 25px;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+                transition: right 0.3s ease;
+                z-index: 999;
+            }
+            .nav-menu.active {
+                right: 0;
+            }
+            .mobile-toggle {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                cursor: pointer;
+                padding: 10px;
+                z-index: 1001;
+            }
+            .mobile-toggle span {
+                width: 28px;
+                height: 3px;
+                background: var(--primary-green);
+                border-radius: 3px;
+                transition: all 0.3s;
+            }
+            .mobile-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(6px, 6px);
+            }
+            .mobile-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .mobile-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(6px, -6px);
+            }
+
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+
+            .page-hero {
+                padding: 120px 0 50px;
+            }
+
+            .contact-section {
+                padding: 50px 0;
+            }
+
+            .floating-whatsapp a span {
+                display: none;
+            }
+
+            .floating-whatsapp a {
+                padding: 14px;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-hero h1 {
+                font-size: 1.6rem;
+            }
+
+            .page-hero {
+                padding: 100px 0 40px;
+            }
+
+            .contact-section {
+                padding: 35px 0;
+            }
+
+            .contact-form .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        .info-banner {
+            background: #e8f5e9;
+            border: 2px solid var(--primary-green);
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+    </style>
+    <link rel="stylesheet" href="/assets/css/footer.css">
+    <script>if(location.hostname==='127.0.0.1'||location.hostname==='localhost')document.addEventListener('DOMContentLoaded',function(){for(var a=document.querySelectorAll('a[href^="/"]'),i=0;i<a.length;i++){var h=a[i].getAttribute('href');if(h!=='/'&&h.indexOf('.')===-1&&h.indexOf('#')===-1)a[i].href=h+'.html'}})</script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="/" class="logo">
+                <div class="logo-icon"><img src="logo.png" alt="Sharjah Approval Logo"></div>
+                <div class="logo-text">
+                    <span class="logo-name">Sharjah Approval</span>
+                    <span>Authority Services</span>
+                </div>
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/services">Services</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/contact" class="btn">Contact Us</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></div>
+        </div>
+    </header>
+
+    <section class="page-hero">
+        <div class="container">
+            <h1>Get in <span class="highlight">Touch</span></h1>
+            <p>Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Contact Information</h2>
+                    <p class="contact-desc">Reach out to us through any of the following channels. Our team typically responds to inquiries within two to four business hours during working days.</p>
+
+                    <div class="contact-item">
+                        <div class="icon"><i class="fas fa-envelope"></i></div>
+                        <div class="details">
+                            <h4>Email</h4>
+                            <p><a href="mailto:info@sharjahapproval.com">info@sharjahapproval.com</a></p>
+                            <p class="contact-hint">For general inquiries and quotation requests</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="icon"><i class="fas fa-phone"></i></div>
+                        <div class="details">
+                            <h4>Phone</h4>
+                            <p><a href="tel:+97165610096">+971 6 561 0096</a></p>
+                            <p class="contact-hint">Call us for immediate assistance</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="details">
+                            <h4>Office Address</h4>
+                            <p>10th Floor, City Gate Tower<br>Al Ittihad Street, Sharjah<br>United Arab Emirates</p>
+                            <p class="contact-hint">Visit us for in-person consultations</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="icon"><i class="fas fa-clock"></i></div>
+                        <div class="details">
+                            <h4>Working Hours</h4>
+                            <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                            <p>Saturday - Sunday: Closed</p>
+                            <p class="contact-hint">Emergency support available via WhatsApp</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="contact-form-card">
+                    <h2>Send Us a Message</h2>
+                    <p class="form-intro">Fill out the form below and one of our consultants will get back to you within 24 hours with a personalized response to your inquiry.</p>
+
+                    <form action="contact-handler.php" method="POST" id="contactForm">
+                        <div class="form-group">
+                            <label>Full Name <span>*</span></label>
+                            <input type="text" name="name" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address <span>*</span></label>
+                            <input type="email" name="email" required placeholder="Enter your email address">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number <span>*</span></label>
+                            <input type="tel" name="phone" required placeholder="e.g., +971 50 123 4567">
+                        </div>
+                        <div class="form-group">
+                            <label>Service Interest</label>
+                            <select name="service" title="Select a service">
+                                <option value="General Inquiry">General Inquiry</option>
+                                <option value="Municipality Approvals">Municipality Approvals</option>
+                                <option value="Civil Defense">Civil Defense</option>
+                                <option value="SEWA Approvals">SEWA Approvals</option>
+                                <option value="Planning & Survey">Planning & Survey</option>
+                                <option value="RTA Approvals">RTA Approvals</option>
+                                <option value="NOC Services">NOC Services</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Message <span>*</span></label>
+                            <textarea name="message" required rows="5" placeholder="Tell us about your project or inquiry..."></textarea>
+                        </div>
+                        <!-- Honeypot for spam protection -->
+                        <input type="text" name="website" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" title="Leave this field empty">
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Send Message</button>
+                        <p class="form-footer-note">Or contact us directly: <a href="tel:+97165610096">+971 6 561 0096</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <div class="logo-icon"><img src="logo.png" alt="Sharjah Approval Logo"></div>
+                        <div class="logo-text"><span class="logo-name">Sharjah Approval</span><span>Authority Services</span></div>
+                    </a>
+                    <p>Your trusted partner for all authority approvals in Sharjah. We make complex processes simple.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/sharjahapproval" target="_blank" rel="noopener" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/sharjahapproval" target="_blank" rel="noopener" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/sharjahapproves" target="_blank" rel="noopener" title="X (Twitter)"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/></svg></a>
+                        <a href="https://www.linkedin.com/company/sharjah-approval" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.youtube.com/@sharjahapproval" target="_blank" rel="noopener" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="/about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="/services"><i class="fas fa-chevron-right"></i> Services</a></li>
+                        <li><a href="/blog"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                        <li><a href="/contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="/services/sharjah-municipality-approvals"><i class="fas fa-chevron-right"></i> Municipality</a></li>
+                        <li><a href="/services/civil-defense-approvals"><i class="fas fa-chevron-right"></i> Civil Defense</a></li>
+                        <li><a href="/services/sewa-approvals"><i class="fas fa-chevron-right"></i> SEWA</a></li>
+                        <li><a href="/services/rta-sharjah-approvals"><i class="fas fa-chevron-right"></i> RTA Sharjah</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><a href="mailto:info@sharjahapproval.com"><i class="fas fa-envelope"></i> info@sharjahapproval.com</a></li>
+                        <li><a href="tel:+97165610096"><i class="fas fa-phone"></i> +971 6 561 0096</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> 10th Floor, City Gate Tower, Al Ittihad Street, Sharjah</a></li>
+                        <li><a href="#"><i class="fas fa-clock"></i> Mon-Fri: 9AM - 6PM</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-network">
+                    <h4>Our Network</h4>
+                    <div class="footer-network-links">
+                        <a href="https://www.dasandpartners.com" target="_blank" rel="noopener">DAS & Partners</a>
+                        <a href="https://www.dasandpartnersengineering.com" target="_blank" rel="noopener">DAS Engineering</a>
+                        <a href="https://www.energytalksmiddleeast.com" target="_blank" rel="noopener">Energy Talks Middle East</a>
+                        <a href="https://www.infrastructuretalks.com" target="_blank" rel="noopener">Infrastructure Talks</a>
+                        <a href="https://www.luxuryarchitecturedesigns.com" target="_blank" rel="noopener">Luxury Architecture Designs</a>
+                        <a href="https://www.middleeaststructural.com" target="_blank" rel="noopener">Middle East Structural</a>
+                        <a href="https://www.uaebim.com" target="_blank" rel="noopener">UAE BIM Services</a>
+                        <a href="https://www.dubaiapprovalservices.com" target="_blank" rel="noopener">Dubai Approval Services</a>
+                        <a href="https://www.abudhabi-approval.com" target="_blank" rel="noopener">Abu Dhabi Approval</a>
+                        <a href="https://www.alainapproval.com" target="_blank" rel="noopener">Al Ain Approval</a>
+                    </div>
+                    <p class="footer-network-powered">Powered by <a href="https://www.dasandpartnersengineering.com" target="_blank" rel="noopener">DAS and Partners Engineering Consultancy</a></p>
+                </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Sharjah Approval. All Rights Reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="floating-whatsapp">
+        <a href="https://wa.me/971542323854" target="_blank" rel="noopener">
+            <i class="fab fa-whatsapp floating-whatsapp-icon"></i>
+            <span>WhatsApp Us</span>
+        </a>
+    </div>
+
+<script>
+var toggle=document.getElementById('mobileToggle'),nav=document.querySelector('.nav-menu');
+toggle.addEventListener('click',function(){toggle.classList.toggle('active');nav.classList.toggle('active');});
+document.querySelectorAll('.nav-menu a').forEach(function(a){a.addEventListener('click',function(){toggle.classList.remove('active');nav.classList.remove('active');});});
+</script>
+</body>
+</html>

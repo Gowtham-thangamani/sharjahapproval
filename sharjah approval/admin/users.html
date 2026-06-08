@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - Sharjah Approval Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Source Sans Pro',sans-serif;background:#f5f6fa;min-height:100vh}
+        .admin-wrapper{display:flex;min-height:100vh}
+        
+        .sidebar{width:250px;background:linear-gradient(180deg,#1a1a2e 0%,#16213e 100%);color:#fff;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+        .sidebar-header{padding:20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,0.1)}
+        .sidebar-logo{width:45px;height:45px;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 4px 15px rgba(0,0,0,0.2)}
+        .sidebar-logo img{width:100%;height:100%;object-fit:cover}
+        .sidebar-brand h2{font-size:1.1rem;font-weight:600}
+        .sidebar-brand span{font-size:0.75rem;opacity:0.7}
+        .sidebar-menu{padding:15px 0}
+        .menu-section{font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;padding:15px 20px 8px;opacity:0.5}
+        .menu-item{display:flex;align-items:center;gap:12px;padding:12px 20px;color:rgba(255,255,255,0.7);text-decoration:none;transition:all 0.3s ease;border-left:3px solid transparent;position:relative;overflow:hidden}
+        .menu-item:hover{background:rgba(255,255,255,0.1);color:#fff;border-left-color:#0a6e4f}
+        .menu-item.active{background:linear-gradient(90deg,rgba(10,110,79,0.3),transparent);color:#fff;border-left-color:#0a6e4f}
+        .menu-item i{width:20px;text-align:center;font-size:1.1rem}
+        .menu-item .badge{background:linear-gradient(135deg,#0a6e4f,#0d8a63);font-size:0.7rem;padding:3px 10px;border-radius:12px;margin-left:auto;box-shadow:0 2px 8px rgba(10,110,79,0.4)}
+        .menu-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);margin:15px 20px}
+        
+        .main-content{flex:1;margin-left:250px;padding:20px}
+        .top-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;background:#fff;padding:20px 25px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05)}
+        .page-title{font-size:1.5rem;color:#1a1a2e;font-weight:700}
+        
+        .btn{padding:12px 24px;border-radius:10px;border:none;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:all 0.3s ease;font-size:0.95rem}
+        .btn-primary{background:linear-gradient(135deg,#0a6e4f,#0d8a63);color:#fff;box-shadow:0 4px 15px rgba(10,110,79,0.3)}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(10,110,79,0.4)}
+        
+        .card{background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);overflow:hidden}
+        .card-header{padding:20px 25px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
+        .card-header h3{font-size:1.1rem;color:#1a1a2e;display:flex;align-items:center;gap:10px}
+        .card-body{padding:25px;overflow-x:auto}
+        
+        .data-table{width:100%;border-collapse:collapse;min-width:600px}
+        .data-table th,.data-table td{padding:15px;text-align:left;border-bottom:1px solid #f0f0f0}
+        .data-table th{font-size:0.8rem;text-transform:uppercase;color:#777;font-weight:600;background:#f8f9fa}
+        .data-table tr{transition:all 0.3s ease}
+        .data-table tr:hover{background:#f8fdf9}
+        
+        .user-info{display:flex;align-items:center;gap:12px}
+        .user-avatar{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#0a6e4f,#c4a35a);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:1rem}
+        .user-details strong{display:block;color:#1a1a2e}
+        .user-details span{font-size:0.85rem;color:#777}
+        
+        .role-badge{padding:5px 12px;border-radius:20px;font-size:0.8rem;font-weight:600}
+        .role-badge.admin{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+        .role-badge.editor{background:linear-gradient(135deg,#11998e,#38ef7d);color:#fff}
+        .role-badge.viewer{background:#e0e0e0;color:#555}
+        
+        .status-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:8px}
+        .status-dot.active{background:#4caf50;box-shadow:0 0 8px rgba(76,175,80,0.5)}
+        .status-dot.inactive{background:#ff9800}
+        
+        .actions{display:flex;gap:8px}
+        .actions button{width:36px;height:36px;border:none;border-radius:8px;cursor:pointer;transition:all 0.3s ease}
+        .edit-btn{background:#e3f2fd;color:#1976d2}
+        .delete-btn{background:#ffebee;color:#c62828}
+        .edit-btn:hover{background:#1976d2;color:#fff;transform:scale(1.1)}
+        .delete-btn:hover{background:#c62828;color:#fff;transform:scale(1.1)}
+        
+        /* Modal */
+        .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+        .modal-overlay.active{display:flex}
+        .modal{background:#fff;border-radius:20px;width:100%;max-width:500px;box-shadow:0 25px 80px rgba(0,0,0,0.3)}
+        .modal-header{padding:25px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
+        .modal-header h2{font-size:1.3rem;color:#1a1a2e}
+        .modal-close{width:36px;height:36px;border-radius:10px;border:none;background:#f5f5f5;cursor:pointer;font-size:1.2rem;color:#777;transition:all 0.3s}
+        .modal-close:hover{background:#ff5252;color:#fff}
+        .modal-body{padding:25px}
+        .modal-footer{padding:20px 25px;border-top:1px solid #eee;display:flex;justify-content:flex-end;gap:12px;background:#f8f9fa}
+        
+        .form-group{margin-bottom:20px}
+        .form-group label{display:block;margin-bottom:8px;font-weight:600;color:#333}
+        .form-group input,.form-group select{width:100%;padding:12px 15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1rem;transition:all 0.3s}
+        .form-group input:focus,.form-group select:focus{border-color:#0a6e4f;outline:none;box-shadow:0 0 0 4px rgba(10,110,79,0.1)}
+        
+        .btn-cancel{background:#f5f5f5;color:#333}
+        .btn-cancel:hover{background:#e0e0e0}
+        
+        @media(max-width:992px){.sidebar{width:70px}.sidebar-brand,.menu-section,.menu-item span,.menu-item .badge{display:none}.sidebar-header{justify-content:center}.menu-item{justify-content:center;padding:15px}.main-content{margin-left:70px}}
+        @media(max-width:768px){.sidebar{transform:translateX(-100%);width:250px;transition:0.3s}.sidebar.active{transform:translateX(0)}.sidebar-brand,.menu-section,.menu-item span,.menu-item .badge{display:block}.main-content{margin-left:0}.top-header{flex-direction:column;gap:15px}}
+        .mobile-menu-btn{display:none;position:fixed;top:15px;left:15px;z-index:101;background:#1a1a2e;color:#fff;border:none;padding:12px 15px;border-radius:10px;cursor:pointer}
+        @media(max-width:768px){.mobile-menu-btn{display:block}}
+        .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:99}.overlay.active{display:block}
+    </style>
+</head>
+<body>
+<script>if(localStorage.getItem('sa_admin_logged')!=='true'){window.location.href='index.html';}</script>
+
+<button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="admin-wrapper">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo"><img src="../logo.png" alt="Logo"></div>
+            <div class="sidebar-brand"><h2>Sharjah</h2><span>Approval</span></div>
+        </div>
+        <nav class="sidebar-menu">
+            <div class="menu-section">CONTENT MANAGEMENT</div>
+            <a href="dashboard.html" class="menu-item"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+            <a href="blogs.html" class="menu-item"><i class="fas fa-newspaper"></i><span>Blogs</span></a>
+            <a href="services.html" class="menu-item"><i class="fas fa-concierge-bell"></i><span>Services</span></a>
+            <a href="subscribers.html" class="menu-item"><i class="fas fa-users"></i><span>Subscribers</span></a>
+            <a href="messages.html" class="menu-item"><i class="fas fa-envelope"></i><span>Messages</span></a>
+            <div class="menu-section">ANALYTICS</div>
+            <a href="analytics.html" class="menu-item"><i class="fas fa-chart-line"></i><span>Live Analytics</span></a>
+            <div class="menu-section">USER MANAGEMENT</div>
+            <a href="users.html" class="menu-item active"><i class="fas fa-user-cog"></i><span>Users</span></a>
+            <a href="profile.html" class="menu-item"><i class="fas fa-id-card"></i><span>My Profile</span></a>
+            <div class="menu-section">SETTINGS</div>
+            <a href="settings.html" class="menu-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+            <div class="menu-divider"></div>
+            <a href="../index.html" class="menu-item" target="_blank"><i class="fas fa-external-link-alt"></i><span>View Site</span></a>
+            <a href="#" class="menu-item" onclick="doLogout();return false;"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </nav>
+    </aside>
+    
+    <main class="main-content">
+        <header class="top-header">
+            <h1 class="page-title"><i class="fas fa-user-cog" style="color:#0a6e4f;margin-right:10px"></i> User Management</h1>
+            <button class="btn btn-primary" onclick="openAddUser()"><i class="fas fa-user-plus"></i> Add User</button>
+        </header>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-users"></i> All Users</h3>
+                <span id="userCount" style="color:#777">0 users</span>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>USER</th><th>EMAIL</th><th>ROLE</th><th>STATUS</th><th>JOINED</th><th>ACTIONS</th></tr>
+                    </thead>
+                    <tbody id="usersTable">
+                        <tr><td colspan="6" style="text-align:center;color:#999;padding:40px">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Add/Edit User Modal -->
+<div class="modal-overlay" id="userModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="modalTitle"><i class="fas fa-user-plus"></i> Add New User</h2>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="userId">
+            <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" id="userName" placeholder="Enter full name" required>
+            </div>
+            <div class="form-group">
+                <label>Email *</label>
+                <input type="email" id="userEmail" placeholder="Enter email address" required>
+            </div>
+            <div class="form-group">
+                <label>Password <span id="pwdNote">(required)</span></label>
+                <input type="password" id="userPassword" placeholder="Enter password">
+            </div>
+            <div class="form-group">
+                <label>Role *</label>
+                <select id="userRole">
+                    <option value="admin">Admin (Full Access)</option>
+                    <option value="editor">Editor (Can manage Services & Blogs)</option>
+                    <option value="viewer">Viewer (Read Only)</option>
+                </select>
+                <small style="color:#777;margin-top:5px;display:block"><strong>Admin:</strong> Full access to all features | <strong>Editor:</strong> Can add/edit/delete services and blogs | <strong>Viewer:</strong> View only</small>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select id="userStatus">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="saveUser()"><i class="fas fa-save"></i> Save User</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleSidebar(){
+    document.getElementById('sidebar').classList.toggle('active');
+    document.getElementById('overlay').classList.toggle('active');
+}
+
+function doLogout(){
+    localStorage.removeItem('sa_admin_logged');
+    localStorage.removeItem('sa_admin_user');
+    window.location.href='index.html';
+}
+
+function openAddUser(){
+    document.getElementById('userId').value='';
+    document.getElementById('userName').value='';
+    document.getElementById('userEmail').value='';
+    document.getElementById('userPassword').value='';
+    document.getElementById('userRole').value='editor';
+    document.getElementById('userStatus').value='active';
+    document.getElementById('modalTitle').innerHTML='<i class="fas fa-user-plus"></i> Add New User';
+    document.getElementById('pwdNote').textContent='(required)';
+    document.getElementById('userModal').classList.add('active');
+}
+
+function closeModal(){
+    document.getElementById('userModal').classList.remove('active');
+}
+
+function saveUser(){
+    var id=document.getElementById('userId').value;
+    var name=document.getElementById('userName').value.trim();
+    var email=document.getElementById('userEmail').value.trim();
+    var pwd=document.getElementById('userPassword').value;
+    var role=document.getElementById('userRole').value;
+    var status=document.getElementById('userStatus').value;
+    
+    if(!name||!email){
+        alert('Please fill all required fields');
+        return;
+    }
+    if(!id&&!pwd){
+        alert('Password is required for new users');
+        return;
+    }
+    
+    var users=JSON.parse(localStorage.getItem('sa_users')||'[]');
+    
+    if(id){
+        for(var i=0;i<users.length;i++){
+            if(users[i].id===id){
+                users[i].name=name;
+                users[i].email=email;
+                if(pwd) users[i].password=pwd;
+                users[i].role=role;
+                users[i].status=status;
+                break;
+            }
+        }
+    }else{
+        users.push({
+            id:'user_'+Date.now(),
+            name:name,
+            email:email,
+            password:pwd,
+            role:role,
+            status:status,
+            createdAt:new Date().toISOString()
+        });
+    }
+    
+    localStorage.setItem('sa_users',JSON.stringify(users));
+    closeModal();
+    loadUsers();
+    alert(id?'User updated!':'User added!');
+}
+
+function editUser(id){
+    var users=JSON.parse(localStorage.getItem('sa_users')||'[]');
+    var user=null;
+    for(var i=0;i<users.length;i++){
+        if(users[i].id===id){
+            user=users[i];
+            break;
+        }
+    }
+    if(user){
+        document.getElementById('userId').value=user.id;
+        document.getElementById('userName').value=user.name || user.fullName || user.username || '';
+        document.getElementById('userEmail').value=user.email;
+        document.getElementById('userPassword').value='';
+        document.getElementById('userRole').value=user.role || 'editor';
+        document.getElementById('userStatus').value=user.status || 'active';
+        document.getElementById('modalTitle').innerHTML='<i class="fas fa-user-edit"></i> Edit User';
+        document.getElementById('pwdNote').textContent='(leave blank to keep current)';
+        document.getElementById('userModal').classList.add('active');
+    }
+}
+
+function deleteUser(id){
+    if(confirm('Delete this user?')){
+        var users=JSON.parse(localStorage.getItem('sa_users')||'[]');
+        var newUsers=[];
+        for(var i=0;i<users.length;i++){
+            if(users[i].id!==id){
+                newUsers.push(users[i]);
+            }
+        }
+        localStorage.setItem('sa_users',JSON.stringify(newUsers));
+        loadUsers();
+    }
+}
+
+function loadUsers(){
+    var users=JSON.parse(localStorage.getItem('sa_users')||'[]');
+    
+    // Convert old format users to new format if needed
+    for(var i=0; i<users.length; i++){
+        // Handle old format from admin.js (fullName, passwordHash)
+        if(users[i].fullName && !users[i].name){
+            users[i].name = users[i].fullName;
+        }
+        if(users[i].username && !users[i].name){
+            users[i].name = users[i].username;
+        }
+        if(!users[i].name){
+            users[i].name = 'User';
+        }
+        if(!users[i].status){
+            users[i].status = 'active';
+        }
+        if(!users[i].createdAt){
+            users[i].createdAt = new Date().toISOString();
+        }
+    }
+    
+    // Add default admin if no users exist (only if never set)
+    if(users.length===0 && localStorage.getItem('sa_users') === null){
+        users=[{
+            id:'user_admin',
+            name:'Administrator',
+            email:'admin@sharjahapproval.ae',
+            password:'Admin@123',
+            role:'admin',
+            status:'active',
+            createdAt:new Date().toISOString()
+        }];
+        localStorage.setItem('sa_users',JSON.stringify(users));
+    }
+    
+    document.getElementById('userCount').textContent=users.length+' user'+(users.length!==1?'s':'');
+    var tbody=document.getElementById('usersTable');
+    
+    if(users.length===0){
+        tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:#999;padding:40px">No users found. Click "Add User" to create one.</td></tr>';
+        return;
+    }
+    
+    var html='';
+    for(var i=0;i<users.length;i++){
+        var u=users[i];
+        var displayName = u.name || u.fullName || u.username || 'User';
+        var nameParts=displayName.split(' ');
+        var initials='';
+        for(var j=0;j<nameParts.length&&j<2;j++){
+            if(nameParts[j].length>0){
+                initials+=nameParts[j][0].toUpperCase();
+            }
+        }
+        if(!initials) initials='U';
+        
+        var roleClass=u.role==='admin'?'admin':(u.role==='editor'?'editor':'viewer');
+        var statusClass=(u.status==='active')?'active':'inactive';
+        var joinDate=new Date(u.createdAt).toLocaleDateString();
+        var username=displayName.toLowerCase().replace(/\s+/g,'');
+        
+        html+='<tr>';
+        html+='<td><div class="user-info"><div class="user-avatar">'+initials+'</div><div class="user-details"><strong>'+displayName+'</strong><span>@'+username+'</span></div></div></td>';
+        html+='<td>'+u.email+'</td>';
+        html+='<td><span class="role-badge '+roleClass+'">'+u.role.charAt(0).toUpperCase()+u.role.slice(1)+'</span></td>';
+        html+='<td><span class="status-dot '+statusClass+'"></span>'+(u.status||'active').charAt(0).toUpperCase()+(u.status||'active').slice(1)+'</td>';
+        html+='<td>'+joinDate+'</td>';
+        html+='<td class="actions">';
+        html+='<button class="edit-btn" onclick="editUser(\''+u.id+'\')"><i class="fas fa-edit"></i></button>';
+        if(u.id!=='user_admin' && u.id!=='admin_001'){
+            html+='<button class="delete-btn" onclick="deleteUser(\''+u.id+'\')"><i class="fas fa-trash"></i></button>';
+        }
+        html+='</td>';
+        html+='</tr>';
+    }
+    tbody.innerHTML=html;
+}
+
+// Load users when page is ready
+document.addEventListener('DOMContentLoaded', function(){
+    loadUsers();
+});
+
+// Also try to load immediately in case DOMContentLoaded already fired
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(loadUsers, 100);
+}
+</script>
+</body>
+</html>

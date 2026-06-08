@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Sharjah Approval Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Source Sans Pro',sans-serif;background:#f5f6fa;min-height:100vh}
+        .admin-wrapper{display:flex;min-height:100vh}
+        
+        .sidebar{width:250px;background:linear-gradient(180deg,#1a1a2e 0%,#16213e 100%);color:#fff;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+        .sidebar-header{padding:20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,0.1)}
+        .sidebar-logo{width:45px;height:45px;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 4px 15px rgba(0,0,0,0.2)}
+        .sidebar-logo img{width:100%;height:100%;object-fit:cover}
+        .sidebar-brand h2{font-size:1.1rem;font-weight:600}
+        .sidebar-brand span{font-size:0.75rem;opacity:0.7}
+        .sidebar-menu{padding:15px 0}
+        .menu-section{font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;padding:15px 20px 8px;opacity:0.5}
+        .menu-item{display:flex;align-items:center;gap:12px;padding:12px 20px;color:rgba(255,255,255,0.7);text-decoration:none;transition:all 0.3s ease;border-left:3px solid transparent}
+        .menu-item:hover{background:rgba(255,255,255,0.1);color:#fff;border-left-color:#0a6e4f}
+        .menu-item.active{background:linear-gradient(90deg,rgba(10,110,79,0.3),transparent);color:#fff;border-left-color:#0a6e4f}
+        .menu-item i{width:20px;text-align:center;font-size:1.1rem}
+        .menu-item .badge{background:linear-gradient(135deg,#0a6e4f,#0d8a63);font-size:0.7rem;padding:3px 10px;border-radius:12px;margin-left:auto}
+        .menu-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);margin:15px 20px}
+        
+        .main-content{flex:1;margin-left:250px;padding:20px}
+        .top-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;background:#fff;padding:20px 25px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05)}
+        .page-title{font-size:1.5rem;color:#1a1a2e;font-weight:700}
+        
+        .profile-grid{display:grid;grid-template-columns:300px 1fr;gap:25px}
+        
+        .profile-card{background:#fff;border-radius:20px;box-shadow:0 4px 20px rgba(0,0,0,0.05);overflow:hidden;text-align:center;animation:fadeInUp 0.5s ease}
+        .profile-cover{height:100px;background:linear-gradient(135deg,#0a6e4f,#c4a35a);position:relative}
+        .profile-avatar{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#1a1a2e,#16213e);display:flex;align-items:center;justify-content:center;color:#fff;font-size:2.5rem;font-weight:700;border:4px solid #fff;position:absolute;bottom:-50px;left:50%;transform:translateX(-50%);box-shadow:0 4px 20px rgba(0,0,0,0.2)}
+        .profile-info{padding:60px 20px 30px}
+        .profile-info h2{font-size:1.4rem;color:#1a1a2e;margin-bottom:5px}
+        .profile-info p{color:#777;margin-bottom:3px}
+        .profile-role{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:5px 15px;border-radius:20px;font-size:0.85rem;font-weight:600;margin-top:10px}
+        .profile-stats{display:flex;justify-content:center;gap:30px;padding:20px;border-top:1px solid #eee;margin-top:20px}
+        .stat-item{text-align:center}
+        .stat-item .value{font-size:1.5rem;font-weight:700;color:#0a6e4f}
+        .stat-item .label{font-size:0.85rem;color:#777}
+        
+        .settings-card{background:#fff;border-radius:20px;box-shadow:0 4px 20px rgba(0,0,0,0.05);animation:fadeInUp 0.5s ease 0.1s both}
+        .card-header{padding:25px;border-bottom:1px solid #eee}
+        .card-header h3{font-size:1.1rem;color:#1a1a2e;display:flex;align-items:center;gap:10px}
+        .card-body{padding:25px}
+        
+        .form-section{margin-bottom:30px;padding-bottom:30px;border-bottom:1px solid #eee}
+        .form-section:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+        .form-section h4{font-size:1rem;color:#1a1a2e;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+        .form-section h4 i{color:#0a6e4f}
+        
+        .form-group{margin-bottom:20px}
+        .form-group label{display:block;margin-bottom:8px;font-weight:600;color:#333}
+        .form-group input{width:100%;padding:14px 18px;border:2px solid #e0e0e0;border-radius:12px;font-size:1rem;transition:all 0.3s}
+        .form-group input:focus{border-color:#0a6e4f;outline:none;box-shadow:0 0 0 4px rgba(10,110,79,0.1)}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        
+        .btn{padding:14px 28px;border-radius:12px;border:none;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:10px;transition:all 0.3s ease;font-size:1rem}
+        .btn-primary{background:linear-gradient(135deg,#0a6e4f,#0d8a63);color:#fff;box-shadow:0 4px 15px rgba(10,110,79,0.3)}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(10,110,79,0.4)}
+        .btn-danger{background:linear-gradient(135deg,#ff5252,#f44336);color:#fff}
+        
+        .alert{padding:15px 20px;border-radius:12px;margin-bottom:20px;display:none;align-items:center;gap:12px;animation:fadeIn 0.3s ease}
+        .alert.success{background:#e8f5e9;color:#2e7d32;display:flex}
+        .alert.error{background:#ffebee;color:#c62828;display:flex}
+        
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        
+        @media(max-width:1100px){.profile-grid{grid-template-columns:1fr}}
+        @media(max-width:992px){.sidebar{width:70px}.sidebar-brand,.menu-section,.menu-item span,.menu-item .badge{display:none}.sidebar-header{justify-content:center}.menu-item{justify-content:center;padding:15px}.main-content{margin-left:70px}}
+        @media(max-width:768px){.sidebar{transform:translateX(-100%);width:250px;transition:0.3s}.sidebar.active{transform:translateX(0)}.sidebar-brand,.menu-section,.menu-item span,.menu-item .badge{display:block}.main-content{margin-left:0}.form-row{grid-template-columns:1fr}}
+        .mobile-menu-btn{display:none;position:fixed;top:15px;left:15px;z-index:101;background:#1a1a2e;color:#fff;border:none;padding:12px 15px;border-radius:10px;cursor:pointer}
+        @media(max-width:768px){.mobile-menu-btn{display:block}}
+        .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:99}.overlay.active{display:block}
+    </style>
+</head>
+<body>
+<script>if(localStorage.getItem('sa_admin_logged')!=='true'){window.location.href='index.html';}</script>
+
+<button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="admin-wrapper">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo"><img src="../logo.png" alt="Logo"></div>
+            <div class="sidebar-brand"><h2>Sharjah</h2><span>Approval</span></div>
+        </div>
+        <nav class="sidebar-menu">
+            <div class="menu-section">CONTENT MANAGEMENT</div>
+            <a href="dashboard.html" class="menu-item"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+            <a href="blogs.html" class="menu-item"><i class="fas fa-newspaper"></i><span>Blogs</span></a>
+            <a href="services.html" class="menu-item"><i class="fas fa-concierge-bell"></i><span>Services</span></a>
+            <a href="subscribers.html" class="menu-item"><i class="fas fa-users"></i><span>Subscribers</span></a>
+            <a href="messages.html" class="menu-item"><i class="fas fa-envelope"></i><span>Messages</span></a>
+            <div class="menu-section">ANALYTICS</div>
+            <a href="analytics.html" class="menu-item"><i class="fas fa-chart-line"></i><span>Live Analytics</span></a>
+            <div class="menu-section">USER MANAGEMENT</div>
+            <a href="users.html" class="menu-item"><i class="fas fa-user-cog"></i><span>Users</span></a>
+            <a href="profile.html" class="menu-item active"><i class="fas fa-id-card"></i><span>My Profile</span></a>
+            <div class="menu-section">SETTINGS</div>
+            <a href="settings.html" class="menu-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+            <div class="menu-divider"></div>
+            <a href="../index.html" class="menu-item" target="_blank"><i class="fas fa-external-link-alt"></i><span>View Site</span></a>
+            <a href="javascript:void(0)" class="menu-item" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </nav>
+    </aside>
+    
+    <main class="main-content">
+        <header class="top-header">
+            <h1 class="page-title"><i class="fas fa-id-card" style="color:#0a6e4f;margin-right:10px"></i> My Profile</h1>
+        </header>
+        
+        <div class="profile-grid">
+            <div class="profile-card">
+                <div class="profile-cover"></div>
+                <div class="profile-avatar" id="avatarInitials">A</div>
+                <div class="profile-info">
+                    <h2 id="profileName">Administrator</h2>
+                    <p id="profileEmail">admin@sharjahapproval.ae</p>
+                    <span class="profile-role" id="profileRole">Admin</span>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <div class="value" id="blogsStat">0</div>
+                            <div class="label">Blogs</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="value" id="daysStat">0</div>
+                            <div class="label">Days Active</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-cog"></i> Account Settings</h3>
+                </div>
+                <div class="card-body">
+                    <div id="alertBox" class="alert"></div>
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-user"></i> Personal Information</h4>
+                        <form onsubmit="updateProfile(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" id="editName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" id="editEmail" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Update Profile</button>
+                        </form>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4><i class="fas fa-lock"></i> Change Password</h4>
+                        <form onsubmit="changePassword(event)">
+                            <div class="form-group">
+                                <label>Current Password</label>
+                                <input type="password" id="currentPwd" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>New Password</label>
+                                    <input type="password" id="newPwd" required minlength="6">
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirm New Password</label>
+                                    <input type="password" id="confirmPwd" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-key"></i> Change Password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('active');document.getElementById('overlay').classList.toggle('active')}
+function doLogout(){localStorage.removeItem('sa_admin_logged');localStorage.removeItem('sa_admin_user');window.location.href='index.html'}
+
+function showAlert(type,msg){
+    var box=document.getElementById('alertBox');
+    box.className='alert '+type;
+    box.innerHTML='<i class="fas fa-'+(type==='success'?'check-circle':'exclamation-circle')+'"></i> '+msg;
+    setTimeout(function(){box.className='alert'},3000);
+}
+
+function loadProfile(){
+    var users=JSON.parse(localStorage.getItem('sa_users')||'[]');
+    var admin=users.find(function(u){return u.id==='user_admin'})||{name:'Administrator',email:'admin@sharjahapproval.ae',role:'admin',createdAt:new Date().toISOString()};
+    
+    document.getElementById('profileName').textContent=admin.name;
+    document.getElementById('profileEmail').textContent=admin.email;
+    document.getElementById('profileRole').textContent=admin.role.charAt(0).toUpperCase()+admin.role.slice(1);
+    document.getElementById('avatarInitials').textContent=admin.name.split(' ').map(function(n){return n[0]}).join('').toUpperCase().substring(0,2);
+    
+    document.getElementById('editName').value=admin.name;
+    document.getElementById('editEmail').value=admin.email;
+    
+    var blogs=JSON.parse(localStorage.getItem('sa_blogs')||'[]');
+    document.getElementById('blogsStat').textContent=blogs.length;
+    
+    var days=Math.floor((Date.now()-new Date(admin.createdAt).getTime())/(1000*60*60*24))+1;
+    document.getElementById('daysStat').textContent=days;
+}
+
+function updateProfile(e){
+    e.preventDefault();
+    var name=document.getElementById('editName').value.trim();
+    var email=document.getElementById('editEmail').value.trim();
+    
+    var users=JSON.parse(localStorage.getItem('sa_users')||'[]');
+    var found=false;
+    for(var i=0;i<users.length;i++){
+        if(users[i].id==='user_admin'){
+            users[i].name=name;
+            users[i].email=email;
+            found=true;
+            break;
+        }
+    }
+    if(!found){
+        users.push({id:'user_admin',name:name,email:email,password:'Admin@123',role:'admin',status:'active',createdAt:new Date().toISOString()});
+    }
+    localStorage.setItem('sa_users',JSON.stringify(users));
+    loadProfile();
+    showAlert('success','Profile updated successfully!');
+}
+
+function changePassword(e){
+    e.preventDefault();
+    var curr=document.getElementById('currentPwd').value;
+    var newp=document.getElementById('newPwd').value;
+    var conf=document.getElementById('confirmPwd').value;
+    
+    var users=JSON.parse(localStorage.getItem('sa_users')||'[]');
+    var admin=users.find(function(u){return u.id==='user_admin'});
+    var currentPassword=admin?admin.password:'Admin@123';
+    
+    if(curr!==currentPassword){showAlert('error','Current password is incorrect');return}
+    if(newp!==conf){showAlert('error','New passwords do not match');return}
+    if(newp.length<6){showAlert('error','Password must be at least 6 characters');return}
+    
+    for(var i=0;i<users.length;i++){
+        if(users[i].id==='user_admin'){
+            users[i].password=newp;
+            break;
+        }
+    }
+    localStorage.setItem('sa_users',JSON.stringify(users));
+    
+    document.getElementById('currentPwd').value='';
+    document.getElementById('newPwd').value='';
+    document.getElementById('confirmPwd').value='';
+    showAlert('success','Password changed successfully!');
+}
+
+loadProfile();
+</script>
+</body>
+</html>

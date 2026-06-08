@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonials - Sharjah Approval Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="admin-styles.css">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="apple-touch-icon" href="../logo.png">
+<script>if(localStorage.getItem("sa_admin_logged")!=="true"){window.location.href="index.html";}</script>
+</head>
+<body data-page="testimonials">
+    <div class="admin-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo"><img src="../logo.png" alt="Logo"></div>
+                <div class="sidebar-brand"><h2>Sharjah</h2><span>Approval</span></div>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+                <a href="blogs.html" class="menu-item"><i class="fas fa-newspaper"></i><span>Blog Posts</span></a>
+                <a href="services.html" class="menu-item"><i class="fas fa-concierge-bell"></i><span>Services</span></a>
+                <a href="testimonials.html" class="menu-item active"><i class="fas fa-quote-right"></i><span>Testimonials</span></a>
+                <a href="messages.html" class="menu-item"><i class="fas fa-envelope"></i><span>Messages</span></a>
+                <a href="subscribers.html" class="menu-item"><i class="fas fa-users"></i><span>Subscribers</span></a>
+                <a href="analytics.html" class="menu-item"><i class="fas fa-chart-line"></i><span>Analytics</span></a>
+                <a href="settings.html" class="menu-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+                <div class="menu-divider"></div>
+                <a href="users.html" class="menu-item"><i class="fas fa-user-cog"></i><span>Users</span></a>
+                <a href="profile.html" class="menu-item"><i class="fas fa-user-circle"></i><span>My Profile</span></a>
+                <a href="../index.html" class="menu-item" target="_blank"><i class="fas fa-external-link-alt"></i><span>View Website</span></a>
+                <a href="#" class="menu-item" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <header class="top-header">
+                <h1 class="page-title">Testimonials</h1>
+                <div class="user-menu">
+                    <button class="btn btn-primary" id="newTestimonialBtn"><i class="fas fa-plus"></i> Add</button>
+                </div>
+            </header>
+            
+            <div class="content-area">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Company</th>
+                                    <th>Rating</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="testimonialsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <div class="modal-overlay" id="testimonialModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="testimonialModalTitle">Add Testimonial</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="testimonialForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="testimonialName">Name *</label>
+                            <input type="text" id="testimonialName" required placeholder="Client name">
+                        </div>
+                        <div class="form-group">
+                            <label for="testimonialCompany">Company</label>
+                            <input type="text" id="testimonialCompany" placeholder="Company name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="testimonialRating">Rating</label>
+                            <select id="testimonialRating">
+                                <option value="5">5 Stars</option>
+                                <option value="4">4 Stars</option>
+                                <option value="3">3 Stars</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="testimonialStatus">Status</label>
+                            <select id="testimonialStatus">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="testimonialContent">Testimonial *</label>
+                        <textarea id="testimonialContent" rows="4" required placeholder="Client testimonial"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" id="saveTestimonialBtn">Save</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="admin.js"></script>
+</body>
+</html>

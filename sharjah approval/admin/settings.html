@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Sharjah Approval Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Site settings for Sharjah Approval.">
+    <link rel="canonical" href="https://sharjahapproval.com/admin/settings.html">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <meta property="og:title" content="Settings - Admin"><meta name="twitter:card" content="summary">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Settings"}</script>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Source Sans Pro',sans-serif;background:#f5f6fa;min-height:100vh}.admin-wrapper{display:flex;min-height:100vh}
+        .sidebar{width:250px;background:#1a1a2e;color:#fff;position:fixed;height:100vh;overflow-y:auto;z-index:100}.sidebar-header{padding:20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,0.1)}.sidebar-logo{width:45px;height:45px;border-radius:10px;overflow:hidden;background:#fff}.sidebar-logo img{width:100%;height:100%;object-fit:cover}.sidebar-brand h2{font-size:1.1rem}.sidebar-brand span{font-size:0.75rem;opacity:0.7}.sidebar-menu{padding:15px 0}.menu-section{font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;padding:15px 20px 8px;opacity:0.5}.menu-item{display:flex;align-items:center;gap:12px;padding:12px 20px;color:rgba(255,255,255,0.7);text-decoration:none;transition:0.3s;border-left:3px solid transparent}.menu-item:hover,.menu-item.active{background:rgba(255,255,255,0.1);color:#fff;border-left-color:#0a6e4f}.menu-item i{width:20px;text-align:center}.menu-divider{height:1px;background:rgba(255,255,255,0.1);margin:15px 20px}
+        .main-content{flex:1;margin-left:250px;padding:20px}.top-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;background:#fff;padding:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.05)}.page-title{font-size:1.5rem;color:#1a1a2e}
+        .card{background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.05);margin-bottom:20px}.card-header{padding:20px;border-bottom:1px solid #eee}.card-header h3{font-size:1rem;display:flex;align-items:center;gap:10px}.card-body{padding:20px}
+        .form-group{margin-bottom:20px}.form-group label{display:block;margin-bottom:8px;font-weight:600;color:#333}.form-group input,.form-group textarea{width:100%;padding:12px;border:2px solid #ddd;border-radius:8px;font-size:1rem;font-family:inherit}.form-group input:focus,.form-group textarea:focus{border-color:#0a6e4f;outline:none}
+        .btn-save{background:#0a6e4f;color:#fff;border:none;padding:12px 25px;border-radius:8px;cursor:pointer;font-size:1rem;font-weight:600}.btn-save:hover{background:#064a35}
+        .settings-form{max-width:500px}
+        @media(max-width:992px){.sidebar{width:70px}.sidebar-brand,.menu-section,.menu-item span{display:none}.sidebar-header{justify-content:center;padding:15px}.menu-item{justify-content:center;padding:15px}.main-content{margin-left:70px}}
+        @media(max-width:768px){.sidebar{transform:translateX(-100%);width:250px;transition:0.3s}.sidebar.active{transform:translateX(0)}.sidebar-brand,.menu-section,.menu-item span{display:block}.main-content{margin-left:0}}
+        .mobile-menu-btn{display:none;position:fixed;top:15px;left:15px;z-index:101;background:#1a1a2e;color:#fff;border:none;padding:10px 15px;border-radius:8px;cursor:pointer}@media(max-width:768px){.mobile-menu-btn{display:block}}
+        .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:99}.overlay.active{display:block}
+    </style>
+</head>
+<body>
+<script>if(localStorage.getItem('sa_admin_logged')!=='true'){window.location.href='index.html';}</script>
+<button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<div class="admin-wrapper">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header"><div class="sidebar-logo"><img src="../logo.png" alt="Logo"></div><div class="sidebar-brand"><h2>Sharjah</h2><span>Approval</span></div></div>
+        <nav class="sidebar-menu">
+            <div class="menu-section">CONTENT MANAGEMENT</div>
+            <a href="dashboard.html" class="menu-item"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+            <a href="blogs.html" class="menu-item"><i class="fas fa-newspaper"></i><span>Blogs</span></a>
+            <a href="services.html" class="menu-item"><i class="fas fa-concierge-bell"></i><span>Services</span></a>
+            <a href="subscribers.html" class="menu-item"><i class="fas fa-users"></i><span>Subscribers</span></a>
+            <a href="messages.html" class="menu-item"><i class="fas fa-envelope"></i><span>Messages</span></a>
+            <div class="menu-section">ANALYTICS</div>
+            <a href="analytics.html" class="menu-item"><i class="fas fa-chart-line"></i><span>Live Analytics</span></a>
+            <div class="menu-section">USER MANAGEMENT</div>
+            <a href="users.html" class="menu-item"><i class="fas fa-user-cog"></i><span>Users</span></a>
+            <a href="profile.html" class="menu-item"><i class="fas fa-id-card"></i><span>My Profile</span></a>
+            <div class="menu-section">SETTINGS</div>
+            <a href="settings.html" class="menu-item active"><i class="fas fa-cog"></i><span>Settings</span></a>
+            <div class="menu-divider"></div>
+            <a href="../index.html" class="menu-item" target="_blank"><i class="fas fa-external-link-alt"></i><span>View Site</span></a>
+            <a href="javascript:void(0)" class="menu-item" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </nav>
+    </aside>
+    <main class="main-content">
+        <header class="top-header"><h1 class="page-title">Settings</h1></header>
+        <div class="card">
+            <div class="card-header"><h3><i class="fas fa-globe"></i> Site Settings</h3></div>
+            <div class="card-body">
+                <form class="settings-form" onsubmit="saveSettings(event)">
+                    <div class="form-group"><label>Site Name</label><input type="text" id="siteName" value="Sharjah Approval"></div>
+                    <div class="form-group"><label>Contact Email</label><input type="email" id="siteEmail" value="info@sharjahapproval.com"></div>
+                    <div class="form-group"><label>Contact Phone</label><input type="text" id="sitePhone" value="+971 6 561 0096"></div>
+                    <div class="form-group"><label>WhatsApp Number</label><input type="text" id="whatsapp" value="+971 54 232 3854"></div>
+                    <div class="form-group"><label>Address</label><textarea id="siteAddress" rows="2">10th Floor, City Gate Tower, Al Ittihad Street, Sharjah, UAE</textarea></div>
+                    <button type="submit" class="btn-save"><i class="fas fa-save"></i> Save Settings</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header"><h3><i class="fas fa-key"></i> Change Password</h3></div>
+            <div class="card-body">
+                <form class="settings-form" onsubmit="changePwd(event)">
+                    <div class="form-group"><label>Current Password</label><input type="password" id="currPwd" required></div>
+                    <div class="form-group"><label>New Password</label><input type="password" id="newPwd" required></div>
+                    <div class="form-group"><label>Confirm Password</label><input type="password" id="confPwd" required></div>
+                    <button type="submit" class="btn-save"><i class="fas fa-lock"></i> Change Password</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('active');document.getElementById('overlay').classList.toggle('active')}
+function doLogout(){localStorage.removeItem('sa_admin_logged');localStorage.removeItem('sa_admin_user');window.location.href='index.html'}
+function saveSettings(e){e.preventDefault();var s={siteName:document.getElementById('siteName').value,siteEmail:document.getElementById('siteEmail').value,sitePhone:document.getElementById('sitePhone').value,whatsapp:document.getElementById('whatsapp').value,siteAddress:document.getElementById('siteAddress').value};localStorage.setItem('sa_settings',JSON.stringify(s));alert('Settings saved!')}
+function changePwd(e){e.preventDefault();var c=document.getElementById('currPwd').value;var n=document.getElementById('newPwd').value;var cf=document.getElementById('confPwd').value;if(c!=='Admin@123'){alert('Wrong current password');return}if(n!==cf){alert('Passwords do not match');return}if(n.length<6){alert('Min 6 characters');return}alert('Password changed! (Demo mode: stays Admin@123)');document.getElementById('currPwd').value='';document.getElementById('newPwd').value='';document.getElementById('confPwd').value=''}
+var saved=JSON.parse(localStorage.getItem('sa_settings')||'{}');if(saved.siteName)document.getElementById('siteName').value=saved.siteName;if(saved.siteEmail)document.getElementById('siteEmail').value=saved.siteEmail;if(saved.sitePhone)document.getElementById('sitePhone').value=saved.sitePhone;if(saved.whatsapp)document.getElementById('whatsapp').value=saved.whatsapp;if(saved.siteAddress)document.getElementById('siteAddress').value=saved.siteAddress;
+</script>
+</body>
+</html>

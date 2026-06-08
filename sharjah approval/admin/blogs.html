@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs - Sharjah Approval Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Source Sans Pro',sans-serif;background:#f5f6fa;min-height:100vh}
+        .admin-wrapper{display:flex;min-height:100vh}
+        
+        .sidebar{width:250px;background:linear-gradient(180deg,#1a1a2e 0%,#16213e 100%);color:#fff;position:fixed;height:100vh;overflow-y:auto;z-index:100}
+        .sidebar-header{padding:20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,0.1)}
+        .sidebar-logo{width:45px;height:45px;border-radius:12px;overflow:hidden;background:#fff}
+        .sidebar-logo img{width:100%;height:100%;object-fit:cover}
+        .sidebar-brand h2{font-size:1.1rem}
+        .sidebar-brand span{font-size:0.75rem;opacity:0.7}
+        .sidebar-menu{padding:15px 0}
+        .menu-section{font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;padding:15px 20px 8px;opacity:0.5}
+        .menu-item{display:flex;align-items:center;gap:12px;padding:12px 20px;color:rgba(255,255,255,0.7);text-decoration:none;transition:all 0.3s;border-left:3px solid transparent}
+        .menu-item:hover,.menu-item.active{background:rgba(255,255,255,0.1);color:#fff;border-left-color:#0a6e4f}
+        .menu-item i{width:20px;text-align:center}
+        .menu-item .badge{background:#0a6e4f;font-size:0.7rem;padding:3px 10px;border-radius:12px;margin-left:auto}
+        .menu-divider{height:1px;background:rgba(255,255,255,0.1);margin:15px 20px}
+        
+        .main-content{flex:1;margin-left:250px;padding:20px}
+        .top-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;background:#fff;padding:20px 25px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);flex-wrap:wrap;gap:15px}
+        .page-title{font-size:1.5rem;color:#1a1a2e;font-weight:700}
+        
+        .btn{padding:12px 24px;border-radius:10px;border:none;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:all 0.3s;font-size:0.95rem}
+        .btn-primary{background:linear-gradient(135deg,#0a6e4f,#0d8a63);color:#fff;box-shadow:0 4px 15px rgba(10,110,79,0.3)}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(10,110,79,0.4)}
+        
+        .card{background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.05);overflow:hidden}
+        .card-header{padding:20px 25px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px}
+        .card-body{padding:25px;overflow-x:auto}
+        
+        .filter-bar{display:flex;gap:15px;flex-wrap:wrap}
+        .filter-bar input,.filter-bar select{padding:10px 15px;border:2px solid #eee;border-radius:8px;font-size:0.95rem;min-width:180px}
+        .filter-bar input:focus,.filter-bar select:focus{border-color:#0a6e4f;outline:none}
+        
+        .data-table{width:100%;border-collapse:collapse;min-width:700px}
+        .data-table th,.data-table td{padding:15px;text-align:left;border-bottom:1px solid #f0f0f0}
+        .data-table th{font-size:0.8rem;text-transform:uppercase;color:#777;font-weight:600;background:#f8f9fa}
+        .data-table tr:hover{background:#f8fdf9}
+        
+        .blog-thumb{width:60px;height:40px;border-radius:8px;object-fit:cover;background:#f0f0f0}
+        .status-badge{padding:5px 12px;border-radius:20px;font-size:0.8rem;font-weight:600}
+        .status-badge.published{background:#e8f5e9;color:#2e7d32}
+        .status-badge.draft{background:#fff3e0;color:#ef6c00}
+        .status-badge.scheduled{background:#e3f2fd;color:#1976d2}
+        
+        .actions{display:flex;gap:8px}
+        .actions button{width:36px;height:36px;border:none;border-radius:8px;cursor:pointer;transition:all 0.3s}
+        .edit-btn{background:#e3f2fd;color:#1976d2}
+        .delete-btn{background:#ffebee;color:#c62828}
+        .edit-btn:hover{background:#1976d2;color:#fff}
+        .delete-btn:hover{background:#c62828;color:#fff}
+        
+        /* Modal */
+        .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+        .modal-overlay.active{display:flex}
+        .modal{background:#fff;border-radius:20px;width:100%;max-width:900px;box-shadow:0 25px 80px rgba(0,0,0,0.3);margin:20px auto}
+        .modal-header{padding:25px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
+        .modal-header h2{font-size:1.3rem;color:#1a1a2e}
+        .modal-close{width:36px;height:36px;border-radius:10px;border:none;background:#f5f5f5;cursor:pointer;font-size:1.2rem;color:#777}
+        .modal-close:hover{background:#ff5252;color:#fff}
+        .modal-body{padding:25px;max-height:70vh;overflow-y:auto}
+        .modal-footer{padding:20px 25px;border-top:1px solid #eee;display:flex;justify-content:flex-end;gap:12px;background:#f8f9fa}
+        
+        .form-group{margin-bottom:20px}
+        .form-group label{display:block;margin-bottom:8px;font-weight:600;color:#333}
+        .form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1rem;transition:all 0.3s;font-family:inherit}
+        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#0a6e4f;outline:none}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        .form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+        
+        /* Image Upload */
+        .image-upload{border:2px dashed #ddd;border-radius:12px;padding:30px;text-align:center;cursor:pointer;transition:all 0.3s;background:#fafafa}
+        .image-upload:hover{border-color:#0a6e4f;background:#f8fdf9}
+        .image-upload.has-image{padding:10px}
+        .image-upload i{font-size:2.5rem;color:#ccc;margin-bottom:10px}
+        .image-upload p{color:#777;margin-bottom:5px}
+        .image-upload span{font-size:0.85rem;color:#aaa}
+        .image-upload input{display:none}
+        .image-preview{max-width:100%;max-height:200px;border-radius:8px;display:none}
+        .image-upload.has-image .image-preview{display:block}
+        .image-upload.has-image i,.image-upload.has-image p,.image-upload.has-image span{display:none}
+        .remove-image{position:absolute;top:5px;right:5px;width:30px;height:30px;background:#ff5252;color:#fff;border:none;border-radius:50%;cursor:pointer;display:none}
+        .image-upload.has-image .remove-image{display:block}
+        .image-wrapper{position:relative;display:inline-block}
+        
+        /* Editor */
+        .editor-box{border:2px solid #e0e0e0;border-radius:10px;overflow:hidden}
+        .editor-toolbar{background:#f8f9fa;padding:10px;border-bottom:1px solid #e0e0e0;display:flex;gap:5px;flex-wrap:wrap}
+        .toolbar-btn{width:36px;height:36px;border:none;background:#fff;cursor:pointer;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-size:0.9rem}
+        .toolbar-btn:hover{background:#0a6e4f;color:#fff}
+        .toolbar-sep{width:1px;background:#ddd;margin:0 5px}
+        .editor-content{min-height:250px;padding:15px;outline:none;line-height:1.8}
+        .editor-content img{max-width:100%;height:auto;border-radius:8px;margin:10px 0}
+        
+        /* Schedule */
+        .schedule-toggle{display:flex;align-items:center;gap:10px;margin-bottom:15px}
+        .schedule-toggle input[type="checkbox"]{width:20px;height:20px;cursor:pointer}
+        .schedule-fields{display:none;padding:15px;background:#f8f9fa;border-radius:10px;margin-top:10px}
+        .schedule-fields.active{display:block}
+        
+        .btn-cancel{background:#f5f5f5;color:#333}
+        .btn-save{background:linear-gradient(135deg,#0a6e4f,#0d8a63);color:#fff}
+        .btn-draft{background:#ff9800;color:#fff}
+        
+        @media(max-width:992px){.sidebar{width:70px}.sidebar-brand,.menu-section,.menu-item span,.menu-item .badge{display:none}.sidebar-header{justify-content:center}.menu-item{justify-content:center;padding:15px}.main-content{margin-left:70px}}
+        @media(max-width:768px){.sidebar{transform:translateX(-100%);width:250px;transition:0.3s}.sidebar.active{transform:translateX(0)}.sidebar-brand,.menu-section,.menu-item span,.menu-item .badge{display:block}.main-content{margin-left:0}.form-row,.form-row-3{grid-template-columns:1fr}}
+        .mobile-menu-btn{display:none;position:fixed;top:15px;left:15px;z-index:101;background:#1a1a2e;color:#fff;border:none;padding:12px 15px;border-radius:10px;cursor:pointer}
+        @media(max-width:768px){.mobile-menu-btn{display:block}}
+        .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:99}.overlay.active{display:block}
+    </style>
+</head>
+<body>
+<script>if(localStorage.getItem('sa_admin_logged')!=='true'){window.location.href='index.html';}</script>
+
+<button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="admin-wrapper">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo"><img src="../logo.png" alt="Logo"></div>
+            <div class="sidebar-brand"><h2>Sharjah</h2><span>Approval</span></div>
+        </div>
+        <nav class="sidebar-menu">
+            <div class="menu-section">CONTENT MANAGEMENT</div>
+            <a href="dashboard.html" class="menu-item"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+            <a href="blogs.html" class="menu-item active"><i class="fas fa-newspaper"></i><span>Blogs</span><span class="badge" id="blogCount">0</span></a>
+            <a href="services.html" class="menu-item"><i class="fas fa-concierge-bell"></i><span>Services</span></a>
+            <a href="subscribers.html" class="menu-item"><i class="fas fa-users"></i><span>Subscribers</span></a>
+            <a href="messages.html" class="menu-item"><i class="fas fa-envelope"></i><span>Messages</span></a>
+            <div class="menu-section">ANALYTICS</div>
+            <a href="analytics.html" class="menu-item"><i class="fas fa-chart-line"></i><span>Live Analytics</span></a>
+            <div class="menu-section">USER MANAGEMENT</div>
+            <a href="users.html" class="menu-item"><i class="fas fa-user-cog"></i><span>Users</span></a>
+            <a href="profile.html" class="menu-item"><i class="fas fa-id-card"></i><span>My Profile</span></a>
+            <div class="menu-section">SETTINGS</div>
+            <a href="settings.html" class="menu-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+            <div class="menu-divider"></div>
+            <a href="../index.html" class="menu-item" target="_blank"><i class="fas fa-external-link-alt"></i><span>View Site</span></a>
+            <a href="javascript:void(0)" class="menu-item" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </nav>
+    </aside>
+    
+    <main class="main-content">
+        <header class="top-header">
+            <h1 class="page-title"><i class="fas fa-newspaper" style="color:#0a6e4f;margin-right:10px"></i> Blog Posts</h1>
+            <div id="headerActions"><button class="btn btn-primary" onclick="openNewPost()"><i class="fas fa-plus"></i> New Post</button></div>
+        </header>
+        
+        <div class="card">
+            <div class="card-header">
+                <div class="filter-bar">
+                    <input type="text" id="searchInput" placeholder="Search blogs..." onkeyup="loadBlogs()">
+                    <select id="statusFilter" onchange="loadBlogs()">
+                        <option value="">All Status</option>
+                        <option value="published">Published</option>
+                        <option value="draft">Draft</option>
+                        <option value="scheduled">Scheduled</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <thead><tr><th>IMAGE</th><th>TITLE</th><th>CATEGORY</th><th>STATUS</th><th>DATE</th><th>VIEWS</th><th>ACTIONS</th></tr></thead>
+                    <tbody id="blogsTable"><tr><td colspan="7" style="text-align:center;color:#999;padding:40px">No blogs yet</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="blogModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="modalTitle"><i class="fas fa-plus-circle"></i> New Blog Post</h2>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="blogId">
+            
+            <!-- Featured Image -->
+            <div class="form-group">
+                <label><i class="fas fa-image"></i> Featured Image</label>
+                <div class="image-upload" id="featuredImageUpload" onclick="document.getElementById('featuredImageInput').click()">
+                    <div class="image-wrapper">
+                        <img class="image-preview" id="featuredImagePreview">
+                        <button type="button" class="remove-image" onclick="event.stopPropagation();removeImage()">&times;</button>
+                    </div>
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Click to upload featured image</p>
+                    <span>JPG, PNG, GIF up to 5MB</span>
+                    <input type="file" id="featuredImageInput" accept="image/*" onchange="handleImageUpload(this)">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Title *</label>
+                    <input type="text" id="blogTitle" placeholder="Enter blog title" required>
+                </div>
+                <div class="form-group">
+                    <label>Category *</label>
+                    <select id="blogCategory">
+                        <option value="Municipality">Municipality</option>
+                        <option value="Civil Defense">Civil Defense</option>
+                        <option value="SEWA">SEWA</option>
+                        <option value="RTA">RTA</option>
+                        <option value="Planning">Planning</option>
+                        <option value="Environmental">Environmental</option>
+                        <option value="Construction">Construction</option>
+                        <option value="NOC">NOC</option>
+                        <option value="General">General</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Excerpt / Summary</label>
+                <textarea id="blogExcerpt" rows="2" placeholder="Brief summary of the blog post..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Content *</label>
+                <div class="editor-box">
+                    <div class="editor-toolbar">
+                        <button type="button" class="toolbar-btn" onclick="execCmd('bold')" title="Bold"><i class="fas fa-bold"></i></button>
+                        <button type="button" class="toolbar-btn" onclick="execCmd('italic')" title="Italic"><i class="fas fa-italic"></i></button>
+                        <button type="button" class="toolbar-btn" onclick="execCmd('underline')" title="Underline"><i class="fas fa-underline"></i></button>
+                        <div class="toolbar-sep"></div>
+                        <button type="button" class="toolbar-btn" onclick="execCmd('insertUnorderedList')" title="Bullet List"><i class="fas fa-list-ul"></i></button>
+                        <button type="button" class="toolbar-btn" onclick="execCmd('insertOrderedList')" title="Numbered List"><i class="fas fa-list-ol"></i></button>
+                        <div class="toolbar-sep"></div>
+                        <button type="button" class="toolbar-btn" onclick="addLink()" title="Add Link"><i class="fas fa-link"></i></button>
+                        <button type="button" class="toolbar-btn" onclick="addContentImage()" title="Insert Image"><i class="fas fa-image"></i></button>
+                        <div class="toolbar-sep"></div>
+                        <button type="button" class="toolbar-btn" onclick="execCmd('formatBlock','H2')" title="Heading 2"><i class="fas fa-heading"></i></button>
+                        <button type="button" class="toolbar-btn" onclick="execCmd('formatBlock','H3')" title="Heading 3">H3</button>
+                        <button type="button" class="toolbar-btn" onclick="execCmd('formatBlock','P')" title="Paragraph">P</button>
+                    </div>
+                    <div class="editor-content" id="blogContent" contenteditable="true"></div>
+                </div>
+                <input type="file" id="contentImageInput" accept="image/*" style="display:none" onchange="insertContentImage(this)">
+            </div>
+            
+            <div class="form-row-3">
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="blogStatus" onchange="toggleSchedule()">
+                        <option value="published">Published</option>
+                        <option value="draft">Draft</option>
+                        <option value="scheduled">Scheduled</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Read Time (min)</label>
+                    <input type="number" id="blogReadTime" value="5" min="1">
+                </div>
+                <div class="form-group">
+                    <label>Author</label>
+                    <input type="text" id="blogAuthor" value="Admin">
+                </div>
+            </div>
+            
+            <!-- Schedule Post -->
+            <div class="schedule-fields" id="scheduleFields">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar"></i> Schedule Date</label>
+                        <input type="date" id="scheduleDate">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-clock"></i> Schedule Time</label>
+                        <input type="time" id="scheduleTime">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Tags (comma separated)</label>
+                <input type="text" id="blogTags" placeholder="e.g. municipality, approval, sharjah">
+            </div>
+            
+            <div class="form-group">
+                <label>Meta Description (SEO)</label>
+                <textarea id="blogMeta" rows="2" placeholder="SEO description for search engines..."></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-draft" onclick="saveBlog('draft')"><i class="fas fa-save"></i> Save Draft</button>
+            <button class="btn btn-save" onclick="saveBlog()"><i class="fas fa-paper-plane"></i> Publish</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Force initialize on page load - only if never set before
+(function(){
+    if(localStorage.getItem('sa_blogs') === null){
+        var defaultData = [
+            {id:'blog_001',title:'Sharjah Municipality Approval Guide 2025',category:'Municipality',excerpt:'Learn everything about Sharjah Municipality approval process, requirements, and timeline.',content:'<p>Complete guide to obtaining Municipality approvals in Sharjah.</p>',featuredImage:'',status:'published',readTime:'5',author:'Admin',tags:'municipality, sharjah, approval',metaDescription:'Complete guide to Sharjah Municipality approvals',views:245,createdAt:'2025-01-05T10:00:00Z',updatedAt:'2025-01-05T10:00:00Z'},
+            {id:'blog_002',title:'SEWA Connection Requirements',category:'SEWA',excerpt:'All you need to know about SEWA approvals for electricity, water, and gas connections.',content:'<p>Essential requirements for SEWA connections.</p>',featuredImage:'',status:'published',readTime:'4',author:'Admin',tags:'sewa, electricity, water',metaDescription:'SEWA connection requirements guide',views:189,createdAt:'2025-01-03T14:30:00Z',updatedAt:'2025-01-03T14:30:00Z'},
+            {id:'blog_003',title:'Civil Defense Fire Safety Compliance',category:'Civil Defense',excerpt:'Essential guide to Sharjah Civil Defense approval process and fire safety compliance.',content:'<p>Understanding fire safety requirements.</p>',featuredImage:'',status:'published',readTime:'6',author:'Admin',tags:'civil defense, fire safety, compliance',metaDescription:'Civil Defense fire safety guide',views:156,createdAt:'2025-01-01T09:00:00Z',updatedAt:'2025-01-01T09:00:00Z'}
+        ];
+        localStorage.setItem('sa_blogs', JSON.stringify(defaultData));
+    }
+})();
+
+var currentFeaturedImage = '';
+var currentUser = null;
+var canEdit = false;
+
+// Default blogs data
+var defaultBlogs = [
+    {id:'blog_001',title:'Sharjah Municipality Approval Guide 2025',category:'Municipality',excerpt:'Learn everything about Sharjah Municipality approval process, requirements, and timeline.',content:'<p>Complete guide to obtaining Municipality approvals in Sharjah. This comprehensive guide covers all aspects of the approval process including documentation requirements, fees, and expected timelines.</p>',featuredImage:'',status:'published',readTime:'5',author:'Admin',tags:'municipality, sharjah, approval',metaDescription:'Complete guide to Sharjah Municipality approvals',views:245,createdAt:'2025-01-05T10:00:00Z',updatedAt:'2025-01-05T10:00:00Z'},
+    {id:'blog_002',title:'SEWA Connection Requirements',category:'SEWA',excerpt:'All you need to know about SEWA approvals for electricity, water, and gas connections.',content:'<p>Essential requirements for SEWA electricity, water, and gas connections. This guide explains the step-by-step process to get your SEWA connections approved quickly and efficiently.</p>',featuredImage:'',status:'published',readTime:'4',author:'Admin',tags:'sewa, electricity, water',metaDescription:'SEWA connection requirements guide',views:189,createdAt:'2025-01-03T14:30:00Z',updatedAt:'2025-01-03T14:30:00Z'},
+    {id:'blog_003',title:'Civil Defense Fire Safety Compliance',category:'Civil Defense',excerpt:'Essential guide to Sharjah Civil Defense approval process and fire safety compliance.',content:'<p>Understanding fire safety requirements and Civil Defense approvals. This article covers all fire safety compliance requirements for buildings in Sharjah.</p>',featuredImage:'',status:'published',readTime:'6',author:'Admin',tags:'civil defense, fire safety, compliance',metaDescription:'Civil Defense fire safety guide',views:156,createdAt:'2025-01-01T09:00:00Z',updatedAt:'2025-01-01T09:00:00Z'}
+];
+
+// Initialize blogs - only if never set before
+function initBlogs(){
+    if(localStorage.getItem('sa_blogs') === null){
+        localStorage.setItem('sa_blogs', JSON.stringify(defaultBlogs));
+    }
+}
+
+// Check user permissions
+function checkPermissions(){
+    var userStr = localStorage.getItem('sa_admin_user');
+    if(userStr){
+        try {
+            currentUser = JSON.parse(userStr);
+            canEdit = (currentUser.role === 'admin' || currentUser.role === 'editor');
+        } catch(e) {
+            // If parsing fails, assume admin
+            canEdit = true;
+            currentUser = {name: 'Admin', role: 'admin'};
+        }
+    } else {
+        canEdit = true;
+        currentUser = {name: 'Admin', role: 'admin'};
+    }
+    
+    var headerActions = document.getElementById('headerActions');
+    if(headerActions){
+        if(canEdit){
+            headerActions.innerHTML = '<button class="btn btn-primary" onclick="openNewPost()"><i class="fas fa-plus"></i> New Post</button>';
+        } else {
+            headerActions.innerHTML = '<span style="color:#777">View Only Access</span>';
+        }
+    }
+}
+
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('active');document.getElementById('overlay').classList.toggle('active')}
+function doLogout(){localStorage.removeItem('sa_admin_logged');localStorage.removeItem('sa_admin_user');window.location.href='index.html'}
+
+function execCmd(cmd,val){document.execCommand(cmd,false,val||null);document.getElementById('blogContent').focus()}
+
+function addLink(){
+    var url=prompt('Enter URL:');
+    if(url)document.execCommand('createLink',false,url);
+}
+
+function addContentImage(){
+    document.getElementById('contentImageInput').click();
+}
+
+function insertContentImage(input){
+    if(input.files&&input.files[0]){
+        var reader=new FileReader();
+        reader.onload=function(e){
+            document.execCommand('insertImage',false,e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function handleImageUpload(input){
+    if(input.files&&input.files[0]){
+        var reader=new FileReader();
+        reader.onload=function(e){
+            currentFeaturedImage=e.target.result;
+            document.getElementById('featuredImagePreview').src=e.target.result;
+            document.getElementById('featuredImageUpload').classList.add('has-image');
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function removeImage(){
+    currentFeaturedImage='';
+    document.getElementById('featuredImagePreview').src='';
+    document.getElementById('featuredImageUpload').classList.remove('has-image');
+    document.getElementById('featuredImageInput').value='';
+}
+
+function toggleSchedule(){
+    var status=document.getElementById('blogStatus').value;
+    var scheduleFields=document.getElementById('scheduleFields');
+    if(status==='scheduled'){
+        scheduleFields.classList.add('active');
+    }else{
+        scheduleFields.classList.remove('active');
+    }
+}
+
+function openNewPost(){
+    document.getElementById('blogId').value='';
+    document.getElementById('blogTitle').value='';
+    document.getElementById('blogCategory').value='General';
+    document.getElementById('blogExcerpt').value='';
+    document.getElementById('blogContent').innerHTML='';
+    document.getElementById('blogStatus').value='published';
+    document.getElementById('blogReadTime').value='5';
+    document.getElementById('blogAuthor').value='Admin';
+    document.getElementById('blogTags').value='';
+    document.getElementById('blogMeta').value='';
+    document.getElementById('scheduleDate').value='';
+    document.getElementById('scheduleTime').value='';
+    currentFeaturedImage='';
+    removeImage();
+    toggleSchedule();
+    document.getElementById('modalTitle').innerHTML='<i class="fas fa-plus-circle"></i> New Blog Post';
+    document.getElementById('blogModal').classList.add('active');
+}
+
+function closeModal(){document.getElementById('blogModal').classList.remove('active')}
+
+function saveBlog(forceDraft){
+    var title=document.getElementById('blogTitle').value.trim();
+    var content=document.getElementById('blogContent').innerHTML.trim();
+    
+    if(!title){alert('Please enter a title');return}
+    if(!content||content==='<br>'){alert('Please enter content');return}
+    
+    var status=forceDraft?'draft':document.getElementById('blogStatus').value;
+    var blogs=JSON.parse(localStorage.getItem('sa_blogs')||'[]');
+    var id=document.getElementById('blogId').value;
+    
+    var blog={
+        id:id||'blog_'+Date.now(),
+        title:title,
+        category:document.getElementById('blogCategory').value,
+        excerpt:document.getElementById('blogExcerpt').value,
+        content:content,
+        featuredImage:currentFeaturedImage,
+        status:status,
+        readTime:document.getElementById('blogReadTime').value,
+        author:document.getElementById('blogAuthor').value||'Admin',
+        tags:document.getElementById('blogTags').value,
+        metaDescription:document.getElementById('blogMeta').value,
+        scheduleDate:document.getElementById('scheduleDate').value,
+        scheduleTime:document.getElementById('scheduleTime').value,
+        views:0,
+        createdAt:new Date().toISOString(),
+        updatedAt:new Date().toISOString()
+    };
+    
+    if(id){
+        for(var i=0;i<blogs.length;i++){
+            if(blogs[i].id===id){
+                blog.views=blogs[i].views||0;
+                blog.createdAt=blogs[i].createdAt;
+                blogs[i]=blog;
+                break;
+            }
+        }
+    }else{
+        blogs.unshift(blog);
+    }
+    
+    localStorage.setItem('sa_blogs',JSON.stringify(blogs));
+    
+    var acts=JSON.parse(localStorage.getItem('sa_activities')||'[]');
+    acts.unshift({id:'act_'+Date.now(),type:'blog',title:id?'Blog Updated':'New Blog',description:title,timestamp:new Date().toISOString()});
+    localStorage.setItem('sa_activities',JSON.stringify(acts.slice(0,50)));
+    
+    closeModal();
+    loadBlogs();
+    alert(forceDraft?'Saved as draft!':id?'Blog updated!':'Blog published!');
+}
+
+function editBlog(id){
+    var blogs=JSON.parse(localStorage.getItem('sa_blogs')||'[]');
+    var blog=null;
+    for(var i=0;i<blogs.length;i++){if(blogs[i].id===id){blog=blogs[i];break}}
+    
+    if(blog){
+        document.getElementById('blogId').value=blog.id;
+        document.getElementById('blogTitle').value=blog.title;
+        document.getElementById('blogCategory').value=blog.category;
+        document.getElementById('blogExcerpt').value=blog.excerpt||'';
+        document.getElementById('blogContent').innerHTML=blog.content;
+        document.getElementById('blogStatus').value=blog.status;
+        document.getElementById('blogReadTime').value=blog.readTime||5;
+        document.getElementById('blogAuthor').value=blog.author||'Admin';
+        document.getElementById('blogTags').value=blog.tags||'';
+        document.getElementById('blogMeta').value=blog.metaDescription||'';
+        document.getElementById('scheduleDate').value=blog.scheduleDate||'';
+        document.getElementById('scheduleTime').value=blog.scheduleTime||'';
+        
+        currentFeaturedImage=blog.featuredImage||'';
+        if(currentFeaturedImage){
+            document.getElementById('featuredImagePreview').src=currentFeaturedImage;
+            document.getElementById('featuredImageUpload').classList.add('has-image');
+        }else{
+            removeImage();
+        }
+        
+        toggleSchedule();
+        document.getElementById('modalTitle').innerHTML='<i class="fas fa-edit"></i> Edit Blog Post';
+        document.getElementById('blogModal').classList.add('active');
+    }
+}
+
+function deleteBlog(id){
+    if(confirm('Delete this blog post?')){
+        var blogs=JSON.parse(localStorage.getItem('sa_blogs')||'[]');
+        blogs=blogs.filter(function(b){return b.id!==id});
+        localStorage.setItem('sa_blogs',JSON.stringify(blogs));
+        loadBlogs();
+    }
+}
+
+function loadBlogs(){
+    initBlogs();
+    var blogs=JSON.parse(localStorage.getItem('sa_blogs')||'[]');
+    var search=document.getElementById('searchInput').value.toLowerCase();
+    var status=document.getElementById('statusFilter').value;
+    
+    var filtered=blogs.filter(function(b){
+        var matchSearch=b.title.toLowerCase().indexOf(search)>-1;
+        var matchStatus=!status||b.status===status;
+        return matchSearch&&matchStatus;
+    });
+    
+    document.getElementById('blogCount').textContent=blogs.length;
+    var tbody=document.getElementById('blogsTable');
+    
+    if(filtered.length===0){
+        tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:#999;padding:40px">No blogs found</td></tr>';
+        return;
+    }
+    
+    var html='';
+    for(var i=0;i<filtered.length;i++){
+        var b=filtered[i];
+        var statusClass=b.status==='published'?'published':b.status==='scheduled'?'scheduled':'draft';
+        var imgSrc=b.featuredImage||'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="40" viewBox="0 0 60 40"><rect fill="%23f0f0f0" width="60" height="40"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23999" font-size="10">No Image</text></svg>';
+        var date=new Date(b.createdAt).toLocaleDateString();
+        
+        var actionsHtml = '';
+        if(canEdit){
+            actionsHtml = '<button class="edit-btn" onclick="editBlog(\''+b.id+'\')"><i class="fas fa-edit"></i></button>'+
+                '<button class="delete-btn" onclick="deleteBlog(\''+b.id+'\')"><i class="fas fa-trash"></i></button>';
+        } else {
+            actionsHtml = '<button class="view-btn" onclick="viewBlog(\''+b.id+'\')" style="background:#e8f5e9;color:#2e7d32"><i class="fas fa-eye"></i></button>';
+        }
+        
+        html+='<tr>'+
+            '<td><img class="blog-thumb" src="'+imgSrc+'" alt=""></td>'+
+            '<td><strong>'+b.title+'</strong></td>'+
+            '<td>'+b.category+'</td>'+
+            '<td><span class="status-badge '+statusClass+'">'+b.status+'</span></td>'+
+            '<td>'+date+'</td>'+
+            '<td>'+(b.views||0)+'</td>'+
+            '<td class="actions">'+actionsHtml+'</td>'+
+        '</tr>';
+    }
+    tbody.innerHTML=html;
+}
+
+function viewBlog(id){
+    window.open('../blog-detail.html?id='+id, '_blank');
+}
+
+checkPermissions();
+loadBlogs();
+</script>
+</body>
+</html>
