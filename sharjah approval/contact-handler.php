@@ -10,6 +10,36 @@ session_start();
 // Load configuration
 require_once 'email-config.php';
 
+/**
+ * Mirror this enquiry into the DAS central leads inbox (dasandpartnersengineering.com).
+ * Best-effort and time-boxed so it never blocks or breaks the visitor's submission.
+ */
+if (!function_exists('das_forward_central')) {
+    function das_forward_central(array $fields) {
+        $endpoint = 'https://www.dasandpartnersengineering.com/leads/api/submit.php';
+        $payload  = json_encode($fields);
+        try {
+            if (function_exists('curl_init')) {
+                $ch = curl_init($endpoint);
+                curl_setopt_array($ch, [
+                    CURLOPT_POST           => true,
+                    CURLOPT_POSTFIELDS     => $payload,
+                    CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_TIMEOUT        => 4,
+                    CURLOPT_CONNECTTIMEOUT => 3,
+                ]);
+                curl_exec($ch);
+                curl_close($ch);
+            } else {
+                @file_get_contents($endpoint, false, stream_context_create([
+                    'http' => ['method' => 'POST', 'header' => "Content-Type: application/json\r\n", 'content' => $payload, 'timeout' => 4],
+                ]));
+            }
+        } catch (Throwable $e) { /* best-effort; ignore */ }
+    }
+}
+
 // Set headers to prevent caching
 header('Content-Type: text/html; charset=utf-8');
 
@@ -157,6 +187,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (empty($errors)) {
             // Save message to JSON file for admin panel
             save_message_to_file($name, $email, $phone, $service, $message);
+
+            // Mirror to the DAS central leads inbox (best-effort)
+            das_forward_central([
+                'site'      => 'sharjah-approval',
+                'form_type' => 'contact',
+                'name'      => $name,
+                'email'     => $email,
+                'phone'     => $phone,
+                'service'   => $service,
+                'message'   => $message,
+                'page_url'  => $_SERVER['HTTP_REFERER'] ?? '',
+            ]);
 
             // Email to admin
             $to = ADMIN_EMAIL;
