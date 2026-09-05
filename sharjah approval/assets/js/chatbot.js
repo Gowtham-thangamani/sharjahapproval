@@ -16,7 +16,7 @@
     // Thanks / Goodbye
     {
       keys: ['thank', 'thanks', 'shukran', 'bye', 'goodbye', 'see you'],
-      reply: '🙏 Thank you for contacting Sharjah Approval! If you need further assistance, feel free to reach out anytime.\n\n📞 +971 6 561 0096\n💬 WhatsApp: +971 54 232 3854',
+      reply: '🙏 Thank you for contacting Sharjah Approval! If you need further assistance, feel free to reach out anytime.\n\n📞 +971 6 561 0096\n💬 WhatsApp: +971 50 351 2542',
       follow: []
     },
 
@@ -188,7 +188,7 @@
     // Pricing
     {
       keys: ['price', 'cost', 'fee', 'charge', 'how much', 'rate', 'quote', 'quotation', 'budget', 'expensive', 'cheap', 'affordable'],
-      reply: '💰 Pricing Information:\n\nWe offer transparent, competitive pricing with NO hidden charges.\n\n✅ Free initial consultation\n✅ Detailed quotation upfront\n✅ Government fees included in quote\n✅ No surprise charges\n\nPricing varies by service type and complexity. Contact us for a free quote:\n\n📞 +971 6 561 0096\n💬 WhatsApp: +971 54 232 3854',
+      reply: '💰 Pricing Information:\n\nWe offer transparent, competitive pricing with NO hidden charges.\n\n✅ Free initial consultation\n✅ Detailed quotation upfront\n✅ Government fees included in quote\n✅ No surprise charges\n\nPricing varies by service type and complexity. Contact us for a free quote:\n\n📞 +971 6 561 0096\n💬 WhatsApp: +971 50 351 2542',
       follow: ['Our Services', 'View Timelines', 'Contact Us']
     },
 
@@ -216,14 +216,14 @@
     // Working Hours
     {
       keys: ['hours', 'timing', 'open', 'close', 'working day', 'weekend', 'saturday', 'sunday', 'friday'],
-      reply: '🕐 Working Hours:\n\nMonday - Friday: 9:00 AM - 6:00 PM\nSaturday & Sunday: Closed\n\n💬 WhatsApp support available 24/7!\nSend us a message anytime: +971 54 232 3854',
+      reply: '🕐 Working Hours:\n\nMonday - Friday: 9:00 AM - 6:00 PM\nSaturday & Sunday: Closed\n\n💬 WhatsApp support available 24/7!\nSend us a message anytime: +971 50 351 2542',
       follow: ['Contact Us', 'Our Services']
     },
 
     // Contact
     {
       keys: ['contact', 'phone', 'call', 'email', 'whatsapp', 'reach', 'talk to'],
-      reply: '📞 Contact Sharjah Approval:\n\n📱 Phone: +971 6 561 0096\n💬 WhatsApp: +971 54 232 3854\n📧 Email: info@sharjahapproval.com\n\n📍 10th Floor, City Gate Tower\nAl Ittihad Street, Sharjah, UAE\n\n🕐 Mon-Fri: 9 AM - 6 PM',
+      reply: '📞 Contact Sharjah Approval:\n\n📱 Phone: +971 6 561 0096\n💬 WhatsApp: +971 50 351 2542\n📧 Email: info@sharjahapproval.com\n\n📍 10th Floor, City Gate Tower\nAl Ittihad Street, Sharjah, UAE\n\n🕐 Mon-Fri: 9 AM - 6 PM',
       follow: ['Our Services', 'Get a Quote']
     },
 
@@ -251,7 +251,7 @@
     // Do I need to visit
     {
       keys: ['need to visit', 'come to office', 'in person', 'myself', 'do i need to go', 'visit government'],
-      reply: '🏠 No Office Visit Needed!\n\nIn most cases, you do NOT need to visit any government office. We handle:\n\n✅ Document collection & preparation\n✅ Government office submissions\n✅ Follow-ups with authorities\n✅ Approved document delivery\n\nYou can manage everything via phone, email, or WhatsApp!\n\n📞 +971 6 561 0096\n💬 +971 54 232 3854',
+      reply: '🏠 No Office Visit Needed!\n\nIn most cases, you do NOT need to visit any government office. We handle:\n\n✅ Document collection & preparation\n✅ Government office submissions\n✅ Follow-ups with authorities\n✅ Approved document delivery\n\nYou can manage everything via phone, email, or WhatsApp!\n\n📞 +971 6 561 0096\n💬 +971 50 351 2542',
       follow: ['How It Works', 'Get a Quote', 'Our Services']
     },
 
@@ -265,7 +265,7 @@
     // Consultation
     {
       keys: ['consultation', 'free consultation', 'book', 'appointment', 'schedule', 'meeting'],
-      reply: '📅 Book a Free Consultation!\n\nGet expert advice on your approval requirements at no cost.\n\n📞 Call: +971 6 561 0096\n💬 WhatsApp: +971 54 232 3854\n📧 Email: info@sharjahapproval.com\n\nOr visit our contact page to submit an inquiry form.\n\n🕐 Available Mon-Fri, 9 AM - 6 PM',
+      reply: '📅 Book a Free Consultation!\n\nGet expert advice on your approval requirements at no cost.\n\n📞 Call: +971 6 561 0096\n💬 WhatsApp: +971 50 351 2542\n📧 Email: info@sharjahapproval.com\n\nOr visit our contact page to submit an inquiry form.\n\n🕐 Available Mon-Fri, 9 AM - 6 PM',
       follow: ['Our Services', 'How It Works']
     }
   ];

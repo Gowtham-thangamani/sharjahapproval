@@ -249,7 +249,7 @@ Your Message:
 $message
 -------------------------------------------------
 
-If you have any urgent matters, please feel free to call us at +971 6 561 0096 or WhatsApp us at +971 54 232 3854.
+If you have any urgent matters, please feel free to call us at +971 6 561 0096 or WhatsApp us at +971 50 351 2542.
 
 Best regards,
 Sharjah Approval Team
@@ -326,7 +326,7 @@ if (!empty($errors)) {
             <p>Need immediate assistance?</p>
             <p>Call us: <a href='tel:+97165610096'>+971 6 561 0096</a></p>
             <p>Email: <a href='mailto:info@sharjahapproval.com'>info@sharjahapproval.com</a></p>
-            <p>WhatsApp: <a href='https://wa.me/971542323854' target='_blank'>+971 54 232 3854</a></p>
+            <p>WhatsApp: <a href='https://wa.me/971503512542' target='_blank'>+971 50 351 2542</a></p>
         </div>
     </div>
 </body>
